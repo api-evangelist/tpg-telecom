@@ -104,14 +104,70 @@ apis:
   - type: SignUp
     url: https://messaging.tpgtelecom.com.au/login
 common:
+- type: VulnerabilityDisclosure
+  url: security/tpg-telecom-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/tpg-telecom-domain-security.yml
+- type: Security
+  url: https://www.tpgtelecom.com.au/.well-known/security.txt
+- type: SecurityTxt
+  url: well-known/tpg-telecom-security.txt
+- type: WellKnown
+  url: well-known/tpg-telecom-well-known.yml
+- type: Authentication
+  url: authentication/tpg-telecom-authentication.yml
+- type: Conventions
+  url: conventions/tpg-telecom-conventions.yml
+- type: ErrorCatalog
+  url: errors/tpg-telecom-problem-types.yml
+- type: ErrorCodes
+  url: errors/tpg-telecom-delivery-status-codes.yml
+- type: DataModel
+  url: data-model/tpg-telecom-data-model.yml
+- type: Lifecycle
+  url: lifecycle/tpg-telecom-lifecycle.yml
+- type: StatusPage
+  url: https://status.messaging.tpgtelecom.com.au
+- type: Webhooks
+  url: asyncapi/tpg-telecom-messaging-webhooks.yml
+- type: MCPServer
+  url: mcp/tpg-telecom-mcp.yml
+- type: Packages
+  url: packages/tpg-telecom-packages.yml
+- type: Conformance
+  url: conformance/tpg-telecom-conformance.yml
+- type: LLMsTxt
+  url: llms/tpg-telecom-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/tpg-telecom-plans.yml
+- type: RateLimits
+  url: rate-limits/tpg-telecom-rate-limits.yml
 - type: Website
   url: https://www.tpgtelecom.com.au/
 - type: About
   url: https://www.tpgtelecom.com.au/about-us
 - type: Documentation
   url: https://support.messaging.tpgtelecom.com.au/hc/en-us
-- type: VulnerabilityDisclosure
-  url: https://www.tpgtelecom.com.au/.well-known/security.txt
+- type: GettingStarted
+  url: https://support.messaging.tpgtelecom.com.au/hc/en-us/sections/4656402628367-Quick-Start-Guides
+- type: Support
+  url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4783185128847-Contacting-us
+- type: Pricing
+  url: https://www.vodafone.com.au/business/messaging-hub
+- type: Login
+  url: https://messaging.tpgtelecom.com.au/login
+- type: TermsOfService
+  url: https://www.tpgtelecom.com.au/website-terms
+- type: PrivacyPolicy
+  url: https://www.tpgtelecom.com.au/about-us/privacy
+- type: Legal
+  url: https://www.tpgtelecom.com.au/legal
+- type: Press
+  url: https://www.tpgtelecom.com.au/media_release
+- type: Careers
+  url: https://www.tpgtelecom.com.au/careers
 - type: GitHubOrganization
   url: https://github.com/tpgtelecom
 - type: LinkedIn

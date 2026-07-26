@@ -1,0 +1,64 @@
+generated: '2026-07-25'
+method: searched
+source: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4693850901263-Create-manage-webhooks
+spec_type: Webhooks
+asyncapi_published: false
+description: >-
+  The event surface of the Vodafone Business Messaging Hub. TPG Telecom documents
+  outbound webhooks (callbacks) for inbound SMS, opt-outs and delivery reports, and
+  runs a dedicated "Inbound System (Webhooks)" component on its status page — but
+  publishes no AsyncAPI document, no event schema registry and no webhook signing
+  scheme. Webhooks are configured in the console, not through an API, so there is no
+  subscription endpoint to describe.
+configuration:
+  surface: Messaging Hub console — Settings > API > Webhooks tab > New Webhook
+  api_managed: false
+  probe:
+    url: https://api.messaging.tpgtelecom.com.au/v1/webhooks
+    status: 401
+    note: Route present on the API host and credential-gated; no public reference documents it.
+  fields:
+    events: One or more events to listen for
+    method: HTTP method used to call the subscriber (e.g. POST)
+    url: Subscriber endpoint (e.g. https://yourapplication.com/sms/inbound-sms)
+    headers: Arbitrary custom headers added to the callback request
+    content: Templated JSON body built from platform variables
+events:
+- channel: SMS
+  event: Receive SMS
+  description: An inbound SMS was received on an account number — the trigger for two-way messaging.
+- channel: SMS
+  event: Opt-out occurred
+  description: A recipient opted out (unsubscribed); consent state changes to UNSUBSCRIBED.
+- channel: Delivery Reports
+  event: Message is delivered
+  description: A delivery receipt confirmed handset delivery.
+- channel: Delivery Reports
+  event: Message has expired
+  description: The message validity period elapsed before delivery.
+payload:
+  content_type: application/json
+  templating: Subscriber-defined key/value pairs whose values are platform variables.
+  variables:
+    $mtID: Mobile-terminated message id
+    $accountId: Account id
+    $sourceAddress: Sender address
+    $destinationAddress: Recipient address
+    $mtContent: Outbound (mobile-terminated) message content
+    $moContent: Inbound (mobile-originated) reply content
+  documented_default: >-
+    { id: $mtID, accountId: $accountId, sourceAddress: $sourceAddress,
+    destinationAddress: $destinationAddress, messageContent: $mtContent,
+    replyContent: $moContent }
+security:
+  signing: none documented
+  verification: >-
+    No signature header, timestamp or shared-secret verification scheme is published.
+    The only integrity control offered is subscriber-supplied custom headers (e.g. a
+    bearer token the subscriber checks).
+  retries: not documented
+related:
+  delivery_status_codes: errors/tpg-telecom-delivery-status-codes.yml
+  delivery_receipts: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4663317896975-Delivery-receipts
+  status_component: Inbound System (Webhooks) — https://status.messaging.tpgtelecom.com.au
+  campaign_status_notifications: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/13057777968783-Campaign-Status-notifications

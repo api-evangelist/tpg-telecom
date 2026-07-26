@@ -1,0 +1,111 @@
+generated: '2026-07-25'
+method: derived
+source: blueprint/tpg-telecom-contacts-management-api.apib
+description: >-
+  Entity-relationship model of the Vodafone Business Messaging Hub Contacts Management
+  API, derived from the request/response JSON Schemas embedded in TPG Telecom's
+  published API Blueprint. Four entities anchor the contact graph: an account-scoped
+  Contact, its Channels (the addressable endpoints), the Lists it belongs to, and the
+  account-level CustomField definitions whose values hang off each contact.
+identifiers:
+  format: UUID v4
+  example: 025e93d3-051b-43f9-b12e-4b5842228dee
+  scope: All ids are scoped to the account (accountId) and the vendor (vendorId) returned on every object.
+entities:
+- name: Contact
+  path: /api/v1/contacts/contacts
+  description: An individual you can message, owned by an account.
+  fields:
+    id: uuid, server-assigned
+    accountId: string, owning account
+    vendorId: string, owning vendor
+    firstName: string
+    lastName: string
+    fullName: string, derived
+    alias: string — alternative name, also the email handle for email-to-SMS
+    dateOfBirth: date
+    country: string
+    state: string
+    location: string
+    note: string
+    createdDate: date-time
+    lastModifiedDate: date-time
+  required_on_create: [channels]
+- name: ContactChannel
+  path: embedded in Contact.channels[]
+  description: An addressable endpoint for a contact plus its consent state.
+  fields:
+    channelId: string — E.164 phone number for PHONE/SMS channels
+    type: enum [SMS, WHATSAPP] on create; [PHONE, SMS, EMAIL] as a retrieval filter
+    subscriptionState: enum [SUBSCRIBED, UNSUBSCRIBED]
+  note: >-
+    Creating a contact as SUBSCRIBED when the channel was previously UNSUBSCRIBED
+    preserves UNSUBSCRIBED — consent state survives re-creation.
+- name: List
+  path: /api/v1/contacts/lists
+  description: A named group of contacts used to target campaigns.
+  fields:
+    id: uuid
+    accountId: string
+    vendorId: string
+    name: string, required
+    alias: string
+  required_on_create: [name]
+- name: CustomField
+  path: /api/v1/contacts/custom-fields
+  description: An account-level typed field definition whose value can be set per contact and merged into message content.
+  fields:
+    id: uuid
+    label: string, required
+    mergeTag: string, required — the token used for message personalisation
+    maxLength: integer, required
+    type: enum [DATE, NUMBER, PHONE, TEXT, URL, ZIP_CODE, NAME, EMAIL], required
+  uniqueness: Creating a custom field that already exists returns 409 conflict.
+- name: ContactCustomFieldValue
+  path: embedded in Contact.customFields[]
+  description: The value a contact carries for a CustomField definition.
+  fields:
+    id: uuid — references CustomField.id
+    mergeTag: string — echoed from the definition
+    value: string
+    type: enum — echoed from the definition
+relationships:
+- from: Contact
+  to: ContactChannel
+  kind: has_many
+  via: channels[]
+  required: true
+- from: Contact
+  to: List
+  kind: has_many
+  via: lists[] (id on write, id + name on read)
+  inverse: List has_many Contact
+- from: List
+  to: Contact
+  kind: has_many
+  via: /api/v1/contacts/lists/{listId}/contacts
+  operations: [Add Contact to List, Remove Contact from List, Add or remove multiple contacts to/from a List]
+- from: Contact
+  to: ContactCustomFieldValue
+  kind: has_many
+  via: customFields[]
+- from: ContactCustomFieldValue
+  to: CustomField
+  kind: belongs_to
+  via: id
+- from: Contact
+  to: Account
+  kind: belongs_to
+  via: accountId
+- from: List
+  to: Account
+  kind: belongs_to
+  via: accountId
+- from: CustomField
+  to: Account
+  kind: belongs_to
+  via: account (custom fields are "linked to the account")
+collections:
+  shape: '{ content: [...], nextPageToken, prevPageToken, totalElements }'
+  default_page_size: 1000
+  detail: conventions/tpg-telecom-conventions.yml

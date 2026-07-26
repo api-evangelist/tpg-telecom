@@ -1,0 +1,141 @@
+generated: '2026-07-25'
+method: derived
+source: >-
+  blueprint/tpg-telecom-contacts-management-api.apib (18 operations, request/response
+  schemas) plus the Vodafone Business Messaging Hub help centre.
+description: >-
+  Cross-cutting request/response semantics of the Vodafone Business Messaging Hub API
+  on the TPG-branded host api.messaging.tpgtelecom.com.au. Derived from the only
+  machine-readable description TPG Telecom publishes — the Contacts Management API
+  Blueprint — and from the help-centre articles that cover credentials, webhooks and
+  sending limits. Two conventions a modern agent-facing API is expected to publish are
+  measurably ABSENT here: there is no idempotency key contract and no rate-limit
+  response signalling anywhere in the specification or the docs.
+
+base_url: https://api.messaging.tpgtelecom.com.au
+api_style: REST over HTTPS, JSON request and response bodies
+
+authentication:
+  scheme: HTTP Basic (Base64 api_key:api_secret) or an hmac-sha1 signed Authorization header
+  key_types: [Basic, HMAC, legacy username/password]
+  oauth2: false
+  detail: authentication/tpg-telecom-authentication.yml
+  docs: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+
+idempotency:
+  supported: false
+  evidence: >-
+    No Idempotency-Key header, no idempotency parameter and no replay semantics appear
+    anywhere in the 12,504-line API Blueprint or in the help centre. Retrying a POST
+    creates a second resource; the only conflict protection is the 409 returned by
+    Create CustomField when a field already exists.
+  safe_retry_operations: >-
+    GET operations are inherently idempotent; PATCH updates and DELETE are idempotent
+    by effect. POST Create Contact / Create List / Create CustomField are not.
+
+pagination:
+  style: cursor
+  applies_to: [Retrieve Contacts, Retrieve Lists, Retrieve CustomFields]
+  request_params:
+    nextPageToken: opaque token for the next page
+    prevPageToken: opaque token for the previous page
+    pageSize: integer, number of results per page, defaults to 1000
+  response_fields:
+    content: array of results, bounded by pageSize
+    nextPageToken: token to request the following page
+    prevPageToken: token to request the preceding page
+    totalElements: total number of matching elements
+  default_sort: creationDate, when no filter is supplied
+  filtering:
+    contacts: [listIds, contactIds, channelIds, channelTypes, channelSubscriptionState]
+    lists: [listIds, alias, name]
+    custom_fields: [customFieldIds, label, mergeTag]
+
+field_expansion:
+  supported: false
+  note: >-
+    Contacts always return their channels, lists and customFields inline; there is no
+    expand/fields parameter and no sparse-fieldset mechanism.
+
+metadata:
+  supported: true
+  mechanism: >-
+    Custom fields — account-defined typed fields (TEXT/DATE/NUMBER) created through
+    /api/v1/contacts/custom-fields and attached to a contact by id, each carrying a
+    mergeTag used for message personalisation.
+  free_form_note_field: contact.note
+  docs: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/9329591939087-Using-contact-fields
+
+request_tracing:
+  request_id_header: none documented
+  error_correlation: >-
+    Every 4xx/5xx error body carries a uuid field — an error id in UUID format — which
+    is the value support asks for when investigating a failed call.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  path_prefix: /api/v1/contacts
+  message_api_prefix: /v1
+  header_versioning: false
+  detail: lifecycle/tpg-telecom-lifecycle.yml
+
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  rfc9457_shaped: true
+  shape: '{ "uuid", "type", "title", "detail", "invalidFields"[] }'
+  note: >-
+    The envelope mirrors RFC 9457 problem details in spirit (a type/title/detail
+    triple) but is served as application/json, uses uuid instead of instance and omits
+    status.
+  types:
+  - validation
+  - not_found
+  - method_not_allowed
+  - conflict
+  - payload_too_large
+  - unsupported_media_type
+  - message_not_readable
+  - internal_server_error
+  - request_not_recognised
+  - forbidden
+  - bad_gateway
+  - payment_required
+  - unauthorized
+  - unknown
+  detail: errors/tpg-telecom-problem-types.yml
+  delivery_status_codes: errors/tpg-telecom-delivery-status-codes.yml
+
+rate_limits:
+  response_signal: none documented
+  status_429: false
+  model: >-
+    Volume sending limits rather than request throttling. Accounts carry a system
+    limit plus admin-configurable daily and monthly sending limits; messages over the
+    limit are marked Discarded (delivery status code 301) rather than rejected with an
+    HTTP status. Admins are emailed at 80% and 100% of a configured limit.
+  detail: rate-limits/tpg-telecom-rate-limits.yml
+  docs: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4693850081935-Viewing-and-updating-SMS-limits
+
+webhooks:
+  supported: true
+  configuration: Console-configured (Settings > API > Webhooks) — no webhook management API is documented on the TPG host.
+  signing: none documented
+  payload: Subscriber-templated JSON built from variables ($mtID, $accountId, $sourceAddress, $destinationAddress, $mtContent, $moContent)
+  detail: asyncapi/tpg-telecom-messaging-webhooks.yml
+  docs: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4693850901263-Create-manage-webhooks
+
+other_conventions:
+- name: Identifiers
+  detail: Contacts, lists and custom fields are UUIDs (e.g. 025e93d3-051b-43f9-b12e-4b5842228dee).
+- name: Phone number format
+  detail: Channel ids are E.164 international format (+61412345678); non-numeric characters and local formats are rejected or fail delivery.
+- name: Timestamps
+  detail: ISO 8601 UTC with milliseconds (2022-08-18T09:15:03.112Z) on createdDate/lastModifiedDate.
+- name: Subscription state
+  detail: A contact channel is SUBSCRIBED or UNSUBSCRIBED; creating a SUBSCRIBED contact that was previously UNSUBSCRIBED preserves UNSUBSCRIBED.
+- name: Bulk list membership
+  detail: PATCH /api/v1/contacts/lists/{listId}/contacts adds and removes multiple contacts in one call.
+- name: No sandbox
+  detail: The platform documents no test mode, test key prefix or magic test numbers; every call is live and billable.

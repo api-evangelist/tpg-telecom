@@ -1,0 +1,60 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  Live probes of the /.well-known/ discovery surface on every TPG Telecom host in
+  apis.yml (corporate site, Messaging Hub console, Messaging Hub API host) plus the
+  Vodafone Australia brand host, 2026-07-25.
+description: >-
+  TPG Telecom publishes exactly one well-known document: an RFC 9116 security.txt on
+  the corporate domain. The Vodafone Business Messaging Hub API host
+  (api.messaging.tpgtelecom.com.au) exposes no discovery surface at all — every
+  /.well-known/ path returns 404, including the OAuth/OIDC metadata documents, which
+  is consistent with the platform's Basic/HMAC key authentication and its lack of any
+  OAuth or OpenID Connect surface.
+hosts:
+- host: https://www.tpgtelecom.com.au
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: tpg-telecom-security.txt
+    standard: RFC 9116
+  - path: /.well-known/api-catalog
+    status: 404
+- host: https://api.messaging.tpgtelecom.com.au
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+- host: https://messaging.tpgtelecom.com.au
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    note: >-
+      Console host is behind a bot challenge for automated clients; no document
+      returned.
+- host: https://www.vodafone.com.au
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+security_txt:
+  file: tpg-telecom-security.txt
+  contact: mailto:vulnerability@tpgtelecom.com.au
+  expires: '2027-01-01T01:00:00.000Z'
+  preferred_languages: en
+  fields_absent:
+  - Policy
+  - Encryption
+  - Acknowledgments
+  - Canonical
+  - Hiring

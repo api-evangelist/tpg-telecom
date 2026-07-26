@@ -1,0 +1,71 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  Registry searches across npm, PyPI, Maven Central, NuGet, RubyGems and Packagist,
+  plus github.com/tpgtelecom and the Messaging Hub help centre, 2026-07-25.
+description: >-
+  TPG Telecom publishes no client libraries of its own. github.com/tpgtelecom exists as
+  "TPG Telecom Limited" with zero public repositories, and no package on any registry
+  is authored by TPG Telecom or Vodafone Australia. Because the Messaging Hub is a
+  white-labelled Sinch MessageMedia deployment, the libraries a Messaging Hub customer
+  would actually reach for are MessageMedia's — recorded below as third-party context
+  with official set to false, since they are first-party to the vendor, not to TPG, and
+  they target the vendor's own host rather than api.messaging.tpgtelecom.com.au.
+first_party: false
+packages: []
+third_party_vendor_packages:
+- language: javascript
+  registry: npm
+  name: messagemedia-messages-sdk
+  version: 2.0.3
+  url: https://www.npmjs.com/package/messagemedia-messages-sdk
+  install: npm install messagemedia-messages-sdk
+  official: false
+  vendor: Sinch MessageMedia
+  note: Upstream vendor SDK for the Messages API that the Messaging Hub REST surface is derived from.
+- language: python
+  registry: pypi
+  name: messagemedia-messages-sdk
+  version: 2.1.3
+  url: https://pypi.org/project/messagemedia-messages-sdk/
+  install: pip install messagemedia-messages-sdk
+  official: false
+  vendor: Sinch MessageMedia
+- language: javascript
+  registry: npm
+  name: messagemedia-webhooks-sdk
+  version: 1.0.0
+  url: https://www.npmjs.com/package/messagemedia-webhooks-sdk
+  install: npm install messagemedia-webhooks-sdk
+  official: false
+  vendor: Sinch MessageMedia
+- language: javascript
+  registry: npm
+  name: messagemedia-lookups-sdk
+  version: 1.0.1
+  url: https://www.npmjs.com/package/messagemedia-lookups-sdk
+  install: npm install messagemedia-lookups-sdk
+  official: false
+  vendor: Sinch MessageMedia
+registries_probed:
+- registry: npm
+  query: tpg-telecom / tpgtelecom / vodafone-australia
+  result: no first-party package
+- registry: pypi
+  query: tpg-telecom
+  result: no first-party package
+- registry: maven-central
+  query: tpgtelecom
+  result: no first-party package
+- registry: nuget
+  query: TPG Telecom
+  result: no first-party package
+- registry: github
+  org: https://github.com/tpgtelecom
+  result: organisation exists, 0 public repositories
+integrations:
+  note: >-
+    Where TPG does ship integration surface it is packaged as marketplace apps for
+    business platforms rather than developer libraries.
+  apps: [Salesforce, Microsoft Dynamics, ServiceNow, Zoho, NetSuite, HubSpot]
+  pricing: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/7126698561679-Extension-App-Pricing-Salesforce-Microsoft-Dynamics-ServiceNow-Zoho-NetSuite

@@ -1,0 +1,144 @@
+generated: '2026-07-25'
+method: searched
+source: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4663332574223-Message-status-definitions-and-codes
+docs:
+- https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4663332574223-Message-status-definitions-and-codes
+- https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4663335236879-Understanding-failed-messages
+- https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4663317896975-Delivery-receipts
+description: >-
+  The Vodafone Business Messaging Hub delivery status code registry — the messaging
+  equivalent of a decline-code reference. These numeric codes are surfaced as Reason
+  Code / Reason Description columns in detailed reports and on delivery receipts, and
+  are the operational vocabulary for why a message did not reach a handset. Captured
+  verbatim from TPG Telecom's own help centre (article last updated 2026-04-02);
+  complements errors/tpg-telecom-problem-types.yml, which covers HTTP-level API errors.
+envelope:
+  surfaced_as: Reason Code and Reason Description columns in Reports > Detailed Reports, and on delivery receipts
+  requires: The Delivery Receipts feature must be enabled for statuses to update.
+message_statuses:
+- status: Scheduled
+  meaning: Scheduled to be sent but not yet sent.
+- status: Sending
+  meaning: Passed to the messaging gateway; no carrier response yet.
+- status: Sent
+  meaning: Successfully sent to the intended recipients.
+- status: Failed
+  meaning: Passed to the gateway, but the recipient's carrier did not acknowledge delivery.
+- status: Rejected
+  meaning: Rejected by the gateway (typically) or by the recipient's carrier.
+- status: Stopped
+  meaning: The campaign was halted by a user on the account.
+- status: Submitted
+  meaning: Passed to the gateway and awaiting a final status.
+- status: Delivered
+  meaning: Successfully delivered to the intended recipients.
+billing_note: >-
+  Failed and Rejected messages may still be charged — once a message passes the
+  gateway the carrier usually bills regardless of delivery outcome.
+delivery_status_codes:
+- code: 101
+  meaning: Message being processed by the gateway.
+  class: in-progress
+- code: 102
+  meaning: Message is being rerouted to a different provider after failing via the first provider.
+  class: in-progress
+- code: 151
+  meaning: Message held for screening.
+  class: in-progress
+- code: 200
+  meaning: Message submitted to downstream provider for delivery.
+  class: in-progress
+- code: 210
+  meaning: Message accepted by downstream provider.
+  class: in-progress
+- code: 211
+  meaning: Message is enroute for delivery by provider.
+  class: in-progress
+- code: 212
+  meaning: Message submitted. Delivery pending.
+  class: in-progress
+- code: 213
+  meaning: Message scheduled for delivery by downstream provider.
+  class: in-progress
+- code: 220
+  meaning: Message delivered.
+  class: delivered
+- code: 221
+  meaning: Message delivered to the handset.
+  class: delivered
+- code: 301
+  meaning: Usage threshold reached. Message discarded.
+  class: discarded
+  action: >-
+    The account hit its daily or monthly sending limit. Raise a support ticket to
+    request a system limit increase, or wait for the limit to reset at the start of the
+    next billing cycle, then resend.
+- code: 302
+  meaning: Destination address blocked. Message discarded.
+  class: discarded
+- code: 303
+  meaning: Source address blocked. Message discarded.
+  class: discarded
+- code: 304
+  meaning: Message dropped. Contact support.
+  class: discarded
+  action: Contact support.
+- code: 305
+  meaning: Message discarded due to duplicate detection.
+  class: discarded
+- code: 320
+  meaning: Message validity period has expired (prior to submission).
+  class: expired
+- code: 330
+  meaning: Gateway failure.
+  class: failed
+- code: 331
+  meaning: Message discarded.
+  class: discarded
+- code: 332
+  meaning: No available route to destination.
+  class: failed
+- code: 333
+  meaning: Source address unsupported for this destination.
+  class: failed
+- code: 400
+  meaning: Message failed; undeliverable.
+  class: failed
+- code: 401
+  meaning: Message validity period has expired (before delivery).
+  class: expired
+- code: 402
+  meaning: Message rejected by downstream provider.
+  class: rejected
+- code: 403
+  meaning: Message skipped by downstream provider.
+  class: rejected
+- code: 405
+  meaning: Message cancelled or deleted by provider.
+  class: rejected
+- code: 410
+  meaning: Invalid source address.
+  class: rejected
+  action: Check the sender ID registration and format.
+- code: 411
+  meaning: Invalid destination address.
+  class: rejected
+  action: Use E.164 format with the international prefix and no punctuation (+61412345678).
+- code: 412
+  meaning: Destination address blocked.
+  class: rejected
+- code: 413
+  meaning: SMS service unavailable on destination.
+  class: rejected
+- code: 414
+  meaning: Destination unreachable.
+  class: rejected
+common_failure_causes:
+- Monthly or daily sending limit reached (code 301).
+- Incorrect or invalid phone number format — use +61412345678, not (0061) 0412 345 678.
+- Destination country restrictions on the account's plan.
+- Sender ID restrictions — short codes, long codes or disallowed sender IDs in the destination country.
+- Recipient has blocked messages or uses a Do Not Disturb service.
+- Message violates content restrictions / spam filters.
+- Handset switched off or out of service.
+- Network or carrier problems.

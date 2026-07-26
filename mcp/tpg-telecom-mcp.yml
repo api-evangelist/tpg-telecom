@@ -1,0 +1,131 @@
+generated: '2026-07-25'
+method: derived
+status: candidate
+source: blueprint/tpg-telecom-contacts-management-api.apib
+description: >-
+  TPG Telecom publishes no Model Context Protocol server, and none is listed in the
+  official MCP registry or in the Messaging Hub help centre. One live finding is worth
+  recording: the API gateway at api.messaging.tpgtelecom.com.au routes an /mcp prefix
+  and answers it with 401 Unauthorized, while unrouted paths on the same host answer
+  404 — so something is mounted there behind credentials. Anonymous tools/list is
+  rejected, so no tool schema could be read and the route is NOT claimed here as a
+  confirmed MCP server. The candidate tool set below is DERIVED from the 18 real
+  operations in TPG's published Contacts Management API Blueprint as a proposal for an
+  agent-facing surface; it is not published by TPG Telecom.
+server: null
+transport: null
+published: false
+probe:
+  date: '2026-07-25'
+  results:
+  - url: https://api.messaging.tpgtelecom.com.au/mcp
+    method: GET
+    status: 401
+    body: '{"message":"Unauthorized"}'
+  - url: https://api.messaging.tpgtelecom.com.au/mcp
+    method: POST
+    request: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    accept: application/json, text/event-stream
+    status: 401
+    body: '{"message":"Unauthorized"}'
+  - url: https://api.messaging.tpgtelecom.com.au/mcp/sse
+    status: 401
+  - url: https://api.messaging.tpgtelecom.com.au/.well-known/mcp.json
+    status: 404
+  controls:
+  - url: https://api.messaging.tpgtelecom.com.au/randomxyz123
+    status: 404
+  - url: https://api.messaging.tpgtelecom.com.au/apizzz
+    status: 404
+  interpretation: >-
+    The gateway matches /mcp as a routed prefix (any suffix returns 401) while
+    arbitrary paths return 404. Consistent with an auth-gated endpoint mounted at
+    /mcp; the protocol spoken there cannot be verified without Messaging Hub
+    credentials, and no TPG or Sinch documentation references it.
+auth:
+  type: http
+  schemes: [Basic (api_key:api_secret), HMAC-SHA1]
+  detail: authentication/tpg-telecom-authentication.yml
+  note: The API has no OAuth surface, so an MCP client would carry a static account key rather than a delegated token.
+candidate_tools:
+- name: create_contact
+  maps_to: POST /api/v1/contacts/contacts
+  description: Create a contact with one or more channels, optionally assigning lists and custom field values.
+  consequence: write
+- name: get_contact
+  maps_to: GET /api/v1/contacts/contacts/{contactId}
+  description: Retrieve a single contact by id.
+  consequence: read
+- name: update_contact
+  maps_to: PATCH /api/v1/contacts/contacts/{contactIdToUpdate}
+  description: Update a contact's details, channels, lists or custom field values.
+  consequence: write
+- name: delete_contact
+  maps_to: DELETE /api/v1/contacts/contacts/{contactIdToDelete}
+  description: Delete a contact.
+  consequence: write
+- name: retrieve_contacts
+  maps_to: GET /api/v1/contacts/contacts
+  description: Page through contacts, filtered by list, contact id, channel id, channel type or subscription state.
+  consequence: read
+- name: create_list
+  maps_to: POST /api/v1/contacts/lists
+  description: Create a contact list.
+  consequence: write
+- name: get_list
+  maps_to: GET /api/v1/contacts/lists/{listId}
+  description: Retrieve a single list by id.
+  consequence: read
+- name: update_list
+  maps_to: PATCH /api/v1/contacts/lists/{listIdToUpdate}
+  description: Rename a list or change its alias.
+  consequence: write
+- name: delete_list
+  maps_to: DELETE /api/v1/contacts/lists/{listIdToRemove}
+  description: Delete a list.
+  consequence: write
+- name: retrieve_lists
+  maps_to: GET /api/v1/contacts/lists
+  description: Page through lists, filtered by id, alias or name.
+  consequence: read
+- name: add_contact_to_list
+  maps_to: POST /api/v1/contacts/lists/{listId}/contacts/{contactToAdd}
+  description: Add one contact to a list.
+  consequence: write
+- name: remove_contact_from_list
+  maps_to: DELETE /api/v1/contacts/lists/{listId}/contacts/{contactId}
+  description: Remove one contact from a list.
+  consequence: write
+- name: bulk_update_list_membership
+  maps_to: PATCH /api/v1/contacts/lists/{listId}/contacts
+  description: Add and remove multiple contacts to/from a list in one call.
+  consequence: write
+- name: create_custom_field
+  maps_to: POST /api/v1/contacts/custom-fields
+  description: Define an account-level custom field (label, mergeTag, type, maxLength).
+  consequence: write
+- name: get_custom_field
+  maps_to: GET /api/v1/contacts/contacts/{customFieldId}
+  description: Retrieve a custom field definition by id.
+  consequence: read
+- name: update_custom_field
+  maps_to: PATCH /api/v1/contacts/contacts/{customFieldIdToUpdate}
+  description: Update a custom field definition.
+  consequence: write
+- name: delete_custom_field
+  maps_to: DELETE /api/v1/contacts/contacts/{customFieldIdToDelete}
+  description: Delete a custom field definition.
+  consequence: write
+- name: retrieve_custom_fields
+  maps_to: GET /api/v1/contacts/custom-fields
+  description: Page through custom field definitions, filtered by id, label or mergeTag.
+  consequence: read
+notes:
+- >-
+  No tool crosswalk artifact is emitted: a crosswalk binds MCP tools to OpenAPI
+  operationIds, and TPG Telecom publishes no OpenAPI — the only machine-readable
+  description is an API Blueprint, whose actions carry no operationIds.
+- >-
+  Messaging (send SMS/MMS, replies, delivery reports) has no published reference on a
+  TPG host, so no candidate tools are proposed for it despite the routes being live
+  and credential-gated.

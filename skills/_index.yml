@@ -1,0 +1,44 @@
+generated: '2026-07-25'
+method: generated
+source: >-
+  blueprint/tpg-telecom-contacts-management-api.apib — every step in every skill is
+  grounded in an operation declared verbatim in TPG Telecom's published API Blueprint.
+  TPG Telecom publishes no AGENTS.md, skill files or agent guidance of its own.
+description: >-
+  Packaged agent operating instructions for the only public API surface TPG Telecom
+  operates — the Vodafone Business Messaging Hub Contacts API. Each skill carries the
+  auth model, the real paths, the cursor-pagination contract, and the two traps that
+  matter on this platform: there is no idempotency key, and consent state is sticky.
+skills:
+- file: tpg-telecom-manage-contacts.md
+  name: Manage contacts in the Vodafone Business Messaging Hub
+  api: blueprint/tpg-telecom-contacts-management-api.apib
+  operations:
+  - POST /api/v1/contacts/contacts
+  - GET /api/v1/contacts/contacts/{contactId}
+  - PATCH /api/v1/contacts/contacts/{contactIdToUpdate}
+  - DELETE /api/v1/contacts/contacts/{contactIdToDelete}
+  - GET /api/v1/contacts/contacts
+- file: tpg-telecom-build-campaign-list.md
+  name: Build and maintain a campaign list
+  api: blueprint/tpg-telecom-contacts-management-api.apib
+  operations:
+  - POST /api/v1/contacts/lists
+  - GET /api/v1/contacts/lists/{listId}
+  - PATCH /api/v1/contacts/lists/{listIdToUpdate}
+  - DELETE /api/v1/contacts/lists/{listIdToRemove}
+  - GET /api/v1/contacts/lists
+  - POST /api/v1/contacts/lists/{listId}/contacts/{contactToAdd}
+  - DELETE /api/v1/contacts/lists/{listId}/contacts/{contactId}
+  - PATCH /api/v1/contacts/lists/{listId}/contacts
+- file: tpg-telecom-personalise-with-custom-fields.md
+  name: Personalise messages with custom fields
+  api: blueprint/tpg-telecom-contacts-management-api.apib
+  operations:
+  - POST /api/v1/contacts/custom-fields
+  - GET /api/v1/contacts/contacts/{customFieldId}
+  - PATCH /api/v1/contacts/contacts/{customFieldIdToUpdate}
+  - DELETE /api/v1/contacts/contacts/{customFieldIdToDelete}
+  - GET /api/v1/contacts/custom-fields
+  - POST /api/v1/contacts/contacts
+  - PATCH /api/v1/contacts/contacts/{contactIdToUpdate}

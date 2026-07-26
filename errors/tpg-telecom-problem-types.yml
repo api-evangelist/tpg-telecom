@@ -1,0 +1,95 @@
+generated: '2026-07-25'
+method: derived
+source: blueprint/tpg-telecom-contacts-management-api.apib
+description: >-
+  API-level error catalogue for the Vodafone Business Messaging Hub Contacts
+  Management API, derived from the 4xx/5xx responses declared on all 18 operations in
+  the published API Blueprint. Every operation declares the same 400/401/403/500/501/
+  502/503/504 set; 409 is declared on the six create/update operations that can
+  collide. Message-delivery failures are a separate catalogue —
+  errors/tpg-telecom-delivery-status-codes.yml.
+format: custom
+media_type: application/json
+rfc9457: false
+envelope:
+  fields:
+    uuid: Error id in UUID format (required)
+    type: Error type enum (required)
+    title: Error title (required)
+    detail: Error additional details (required)
+    invalidFields: Array of invalid input fields, present on validation errors
+  invalid_field_fields:
+    name: Field name
+    channelType: Channel type the failure relates to (e.g. PHONE)
+    code: Machine-readable failure code (e.g. must_not_be_empty)
+    reason: Human-readable reason
+    invalidIds: Ids that failed validation
+error_types:
+- validation
+- not_found
+- method_not_allowed
+- conflict
+- payload_too_large
+- unsupported_media_type
+- message_not_readable
+- internal_server_error
+- request_not_recognised
+- forbidden
+- bad_gateway
+- payment_required
+- unauthorized
+- unknown
+problems:
+- status: 400
+  type: validation
+  title: Request has incorrect values
+  body: envelope with invalidFields[]
+  declared_on: all 18 operations
+  remediation: Correct the named fields; invalidFields[].code identifies the rule that failed.
+- status: 401
+  type: unauthorized
+  title: No valid authentication details were provided
+  body: none (empty response)
+  declared_on: all 18 operations
+  remediation: Send a valid Basic or HMAC Authorization header; keys are minted in the Messaging Hub console.
+- status: 403
+  type: forbidden
+  title: The authenticated user or account doesn't have permission
+  body: none (empty response)
+  declared_on: all 18 operations
+  remediation: The key's account lacks permission for the resource; only account administrators can manage API access.
+- status: 409
+  type: conflict
+  title: Conflict — the resource already exists
+  body: envelope without invalidFields
+  declared_on: Create/Update Contact, List and CustomField operations
+  remediation: Fetch the existing resource and update it instead of recreating it.
+- status: 500
+  type: internal_server_error
+  title: Internal server error
+  declared_on: all 18 operations
+- status: 501
+  type: request_not_recognised
+  title: Request not recognised
+  declared_on: all 18 operations
+- status: 502
+  type: bad_gateway
+  title: Invalid server response
+  declared_on: all 18 operations
+- status: 503
+  type: unknown
+  title: Server currently unavailable
+  declared_on: all 18 operations
+  remediation: Retry with backoff; check https://status.messaging.tpgtelecom.com.au.
+- status: 504
+  type: unknown
+  title: Gateway time out
+  declared_on: all 18 operations
+  remediation: Retry with backoff. There is no idempotency key, so retrying a create may duplicate the resource.
+success_responses:
+- status: 200
+  used_by: 11 operations (reads and updates)
+- status: 201
+  used_by: 3 create operations
+- status: 204
+  used_by: 4 delete / membership operations

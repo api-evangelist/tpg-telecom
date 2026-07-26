@@ -1,0 +1,32 @@
+generated: '2026-07-25'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.tpgtelecom.com.au
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Feb  5 23:59:59 2027 GMT
+  hsts: false
+- host: contactsapiv1tgp.docs.apiary.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 18 23:59:59 2026 GMT
+  hsts: false
+- host: api.messaging.tpgtelecom.com.au
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan  9 23:59:59 2027 GMT
+  hsts: null
+domains:
+- domain: tpgtelecom.com.au
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none
+- domain: apiary.io
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none

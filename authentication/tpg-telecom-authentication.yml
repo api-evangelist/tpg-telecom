@@ -1,0 +1,84 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  blueprint/tpg-telecom-contacts-management-api.apib (Authentication section) plus the
+  Vodafone Business Messaging Hub help-centre articles "Creating new API credentials"
+  and "Managing Existing API Credentials".
+docs: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+description: >-
+  The Vodafone Business Messaging Hub API authenticates with account-scoped API keys
+  minted in the console — there is no OAuth 2.0, no OpenID Connect, no CIBA and no
+  mutual TLS anywhere on the TPG Telecom developer surface. Anonymous probes of the
+  OAuth/OIDC discovery documents on api.messaging.tpgtelecom.com.au return 404.
+summary:
+  types: [http, hmac]
+  api_key_in: [header]
+  oauth2_flows: []
+  oauth2: false
+  oidc: false
+  mtls: false
+  ciba: false
+schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  description: >-
+    Authorization: Basic Base64(api_key:api_secret). The API key and secret are issued
+    from the Messaging Hub console (Settings > API Settings > Basic Authentication).
+  header: Authorization
+  sources:
+  - blueprint/tpg-telecom-contacts-management-api.apib
+  docs: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+- name: HmacAuth
+  type: http
+  scheme: hmac
+  algorithm: hmac-sha1
+  description: >-
+    Authorization: hmac username="<API KEY>", algorithm="hmac-sha1", headers="Date
+    Content-MD5 request-line", signature="<SIGNATURE>". Requests without a body omit
+    Content-MD5 and sign headers="Date request-line".
+  signing:
+    date_header: Date (RFC 7231 section 7.1.1.2 format)
+    body_digest_header: Content-MD5 (MD5 of the request body; omitted when no body)
+    signing_string: Date header, Content-MD5 header (when set) and the request line joined by line breaks
+    signature: Base64(HMAC-SHA1(signing string, api_secret))
+  sources:
+  - blueprint/tpg-telecom-contacts-management-api.apib
+  docs: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+- name: LegacyCredentials
+  type: http
+  scheme: basic
+  status: legacy
+  description: >-
+    Legacy username/password API credentials, created in the console under Settings >
+    API Settings > Legacy API Credentials. The help centre describes these as the
+    credentials used to "connect with your Sinch MessageMedia account".
+  sources:
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+credential_issuance:
+  self_serve: false
+  who: Account Administrators only (Basic and Advanced account permissions cannot manage keys)
+  where: Messaging Hub console — Settings > API Settings
+  secret_visibility: The API secret is displayed exactly once at creation; a lost secret requires a new key/secret pair.
+  rotation: Keys are created, renamed and deleted from the same console screen.
+  docs:
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750458066959-Managing-Existing-API-Credentials
+account_security:
+  two_factor: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/5576504931343-2FA-Two-Factor-Authentication
+  sso: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4694345111823-SSO-Single-sign-on-configuration
+  roles: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4693954167695-User-roles
+  best_practices: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4694325372047-Best-practices-for-securing-your-account
+  note: >-
+    2FA and SSO protect the console (human) login, not API calls; the API itself has no
+    scope model — a key carries the permissions of the account it belongs to.
+probes:
+- url: https://api.messaging.tpgtelecom.com.au/.well-known/openid-configuration
+  status: 404
+- url: https://api.messaging.tpgtelecom.com.au/.well-known/oauth-authorization-server
+  status: 404
+- url: https://api.messaging.tpgtelecom.com.au/.well-known/oauth-protected-resource
+  status: 404
+- url: https://api.messaging.tpgtelecom.com.au/api/v1/contacts/contacts
+  status: 401
+  body: '{"message":"Unauthorized"}'

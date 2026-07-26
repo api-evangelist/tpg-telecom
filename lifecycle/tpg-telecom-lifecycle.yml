@@ -1,0 +1,84 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  blueprint/tpg-telecom-contacts-management-api.apib plus live probes of
+  status.messaging.tpgtelecom.com.au (Atlassian Statuspage) and the Vodafone Business
+  Messaging Hub help centre, 2026-07-25.
+description: >-
+  Versioning, deprecation and operational-transparency posture for the only public API
+  surface TPG Telecom operates. The finding that matters: TPG runs a real,
+  TPG-branded Atlassian status page for the Messaging Hub — including a dedicated REST
+  API component and an Inbound System (Webhooks) component — but publishes no
+  deprecation policy, no versioning policy page, no SLA document and no changelog for
+  the API itself.
+versioning:
+  scheme: uri-path
+  current: v1
+  paths:
+    contacts_api: /api/v1/contacts
+    messaging_api: /v1
+  policy_url: null
+  policy_published: false
+  note: >-
+    Only v1 has ever been published on the TPG-branded host. No version negotiation
+    header, no dated version train, and no documented policy for how a v2 would be
+    introduced.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation header support and no
+    deprecated operations are declared. The one lifecycle event the help centre does
+    document is the platform rebrand to Vodafone Business Messaging Hub, and a
+    deprecation of legacy API credentials in favour of Basic/HMAC keys is implied by
+    the credential docs but never stated as policy.
+  related:
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/14352176748303-Rebrand-to-Vodafone-Business-Messaging-Hub
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/13656039645711-Upcoming-changes-to-alphanumeric-sender-ID-formerly-alpha-tag-registration-and-usage
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment is published for the Messaging Hub API. Plans
+    advertise 24/7 email and phone support and a 12-month minimum term; the Critical
+    Information Summary on the product page is the nearest contractual document.
+status_page:
+  url: https://status.messaging.tpgtelecom.com.au
+  provider: Atlassian Statuspage
+  page_name: Vodafone Business Messaging Hub
+  time_zone: Australia/Melbourne
+  status_api: https://status.messaging.tpgtelecom.com.au/api/v2/summary.json
+  history_feed: https://status.messaging.tpgtelecom.com.au/history.rss
+  probed: '2026-07-25'
+  http_status: 200
+  components:
+  - group: Services
+    items: [Web Portal, Email to SMS, REST API, Inbound System (Webhooks)]
+  - group: Ecosystems
+    items: [HubSpot, Microsoft Dynamics, Zoho CRM, NetSuite, Salesforce]
+  incident_history:
+    entries_published: 24
+    most_recent:
+    - date: '2026-06-25'
+      name: Message Delivery Degradation
+      impact: major
+    - date: '2026-06-18'
+      name: APAC - Message deliverability/delay issues
+      impact: minor
+    - date: '2026-05-28'
+      name: Web Portal - Australian Alpha Tag Registration Delays
+      impact: minor
+changelog:
+  published: false
+  note: >-
+    No dated API changelog or release-notes surface exists. The help centre carries
+    product announcement articles but nothing versioned; the status page incident
+    history is operational, not a changelog.
+support:
+  channels:
+  - 24/7 email and phone support (included on every Messaging Hub plan)
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4783185128847-Contacting-us
+  - https://www.tpgtelecom.com.au/contact

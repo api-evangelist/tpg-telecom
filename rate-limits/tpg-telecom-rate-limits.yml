@@ -1,0 +1,69 @@
+rateLimits: 0.1
+provider: tpg-telecom
+title: Vodafone Business Messaging Hub Sending Limits
+generated: '2026-07-25'
+method: searched
+description: |
+  The Messaging Hub governs consumption with volume sending limits rather than
+  request-rate throttling. Each account carries a system limit set by TPG/Sinch, and
+  administrators can set a monthly and a daily sending limit at or below it. Messages
+  that exceed a limit are marked Discarded with delivery status code 301 — there is no
+  HTTP 429, no Retry-After and no X-RateLimit family of response headers anywhere in
+  the published API Blueprint or the help centre. The numeric system limit is
+  account-specific and is not published, so no per-account figure is recorded here.
+sources:
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4693850081935-Viewing-and-updating-SMS-limits
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4663332574223-Message-status-definitions-and-codes
+  - blueprint/tpg-telecom-contacts-management-api.apib
+policies:
+  - id: monthly-sending-limit
+    scope: Account
+    applies-to: ["SMS", "MMS"]
+    limit:
+      requests: account-configured
+      window: month
+    description: |
+      Administrator-configured ceiling on messages sent per billing month. Cannot be
+      set above the account's assigned system limit; a higher ceiling requires a
+      system limit increase request from Settings > Numbers > Settings > Messaging,
+      which raises a support ticket for approval.
+  - id: daily-sending-limit
+    scope: Account
+    applies-to: ["SMS", "MMS"]
+    limit:
+      requests: account-configured
+      window: day
+    description: |
+      Administrator-configured daily ceiling; cannot exceed the monthly limit.
+  - id: system-limit
+    scope: Account
+    applies-to: ["SMS", "MMS"]
+    limit:
+      requests: assigned
+      window: month
+    description: |
+      The hard limit assigned to the account by TPG Telecom. Not published; only
+      raised through an approved support request. Limits cannot be set to expire or
+      revert automatically.
+  - id: api-request-throughput
+    scope: API
+    applies-to: ["/api/v1/contacts", "/v1/messages"]
+    limit:
+      requests: not published
+      window: not published
+    description: |
+      No request-per-second or per-minute API throughput limit is documented, and the
+      API Blueprint declares no 429 response and no rate-limit headers on any of its
+      18 operations.
+enforcement:
+  over_limit_behaviour: Message marked Discarded in log reports; delivery status code 301 (usage threshold reached).
+  http_status: none — enforcement happens at the messaging layer, not the HTTP layer.
+  recovery: Resend after the limit resets at the start of the next billing cycle, or after an administrator/support raises the limit.
+notifications:
+  - threshold: 80%
+    channel: Automated email to all account Admins the first time any configured limit (daily or monthly) reaches 80%.
+  - threshold: 100%
+    channel: Second alert email to Admins when a sending limit is reached.
+related:
+  conventions: conventions/tpg-telecom-conventions.yml
+  delivery_status_codes: errors/tpg-telecom-delivery-status-codes.yml

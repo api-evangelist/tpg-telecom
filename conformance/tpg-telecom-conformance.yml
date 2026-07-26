@@ -1,0 +1,92 @@
+generated: '2026-07-25'
+method: derived
+source: >-
+  blueprint/tpg-telecom-contacts-management-api.apib, well-known probes, and the
+  Vodafone Business Messaging Hub help centre.
+description: >-
+  Which cross-cutting and industry standards the TPG Telecom developer surface actually
+  conforms to. The telecom-sector standards that define this space — CAMARA, GSMA Open
+  Gateway, TM Forum Open APIs, 3GPP NEF/SCEF — are all absent, consistent with TPG's
+  stated position of "closely watching" Open Gateway while shipping nothing. What is
+  present is a conventional key-authenticated CPaaS REST API with a problem-shaped
+  error envelope and cursor pagination.
+standards:
+- id: openapi
+  conforms: false
+  evidence: No OpenAPI or Swagger document is published on any TPG Telecom or Vodafone Australia host; /openapi.json, /swagger.json, /v1/openapi.json, /api-docs and /docs on api.messaging.tpgtelecom.com.au all return 404.
+- id: api-blueprint
+  conforms: true
+  evidence: blueprint/tpg-telecom-contacts-management-api.apib — API Blueprint format 1A, 18 operations, harvested from the Apiary project TPG embeds in its help centre.
+- id: rest
+  conforms: true
+  evidence: Resource-oriented JSON over HTTPS with GET/POST/PATCH/DELETE and 200/201/204 semantics.
+- id: rfc9457-problem-details
+  conforms: false
+  partial: true
+  evidence: Errors carry a type/title/detail triple but are served as application/json (not application/problem+json), use uuid in place of instance and omit status.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 scheme in the specification; /.well-known/oauth-authorization-server returns 404.
+- id: openid-connect
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on the API host.
+- id: ciba
+  conforms: false
+  evidence: No backchannel authentication endpoint; there is no network-authorization surface to bind it to.
+- id: mutual-tls
+  conforms: false
+  evidence: Not offered; authentication is Basic or HMAC-SHA1 over TLS.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: well-known/tpg-telecom-security.txt — Contact and Expires fields present on www.tpgtelecom.com.au.
+- id: rfc7231-http-date
+  conforms: true
+  evidence: HMAC signing requires a Date header in RFC 7231 section 7.1.1.2 format.
+- id: hmac-sha1-request-signing
+  conforms: true
+  evidence: Authorization:hmac with headers="Date Content-MD5 request-line" and a Base64 HMAC-SHA1 signature.
+- id: e164
+  conforms: true
+  evidence: Contact channel ids are E.164 international format; non-conforming numbers fail delivery (status code 411).
+- id: iso8601
+  conforms: true
+  evidence: createdDate/lastModifiedDate are ISO 8601 UTC with milliseconds.
+- id: cursor-pagination
+  conforms: true
+  evidence: nextPageToken/prevPageToken/pageSize with content/totalElements response envelope.
+- id: idempotency-keys
+  conforms: false
+  evidence: No idempotency header or parameter anywhere in the specification or docs.
+- id: asyncapi
+  conforms: false
+  evidence: Webhooks are documented and a webhook route is live, but no AsyncAPI document is published.
+- id: camara
+  conforms: false
+  evidence: No CAMARA API, no Open Gateway portal, no Aduna channel. TPG's public statement is that it is "closely watching developments like GSMA Open Gateway" while prioritising local scam prevention.
+- id: gsma-open-gateway
+  conforms: false
+  evidence: Non-participant; Australian CAMARA supply comes from Telstra (Number Verification, SIM Swap) with Optus following.
+- id: tmforum-open-api
+  conforms: false
+  evidence: No TM Forum Open API conformance certification (TMF620/622/641 or otherwise) found for TPG Telecom.
+- id: 3gpp-nef-scef
+  conforms: false
+  evidence: No network exposure function, network-slicing or edge/MEC API is documented; Mobile Private Network and Managed IoT Connectivity are sold as managed services with a portal.
+- id: graphql
+  conforms: false
+  evidence: /graphql on the API host returns 404.
+- id: grpc
+  conforms: false
+  evidence: No .proto definitions published on any TPG host, GitHub org or buf.build.
+compliance_program:
+  published: false
+  trust_center: false
+  certifications: []
+  note: >-
+    No trust centre, no security/compliance page and no named certification (ISO 27001,
+    SOC 2, PCI DSS) is published on tpgtelecom.com.au; trust.tpgtelecom.com.au does not
+    resolve and /security, /trust and /compliance return 404. The corporate governance
+    and sustainability pages carry no certification claims. Australian telecom
+    regulatory obligations (ACMA, Telecommunications Consumer Protections Code,
+    Privacy Act) apply as a matter of law but are not published as an API compliance
+    posture.

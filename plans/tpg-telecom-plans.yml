@@ -1,0 +1,229 @@
+plans: 0.1
+provider: tpg-telecom
+title: Vodafone Business Messaging Hub Plans
+generated: '2026-07-25'
+method: searched
+description: |
+  Published commercial plans for the Vodafone Business Messaging Hub — the only
+  API-bearing product TPG Telecom sells. Five monthly tiers are listed on the
+  Vodafone Australia product page with a fixed plan fee, an included national SMS
+  allowance and a per-message overage rate; every tier includes REST API access.
+  Add-on pricing (dedicated numbers, lookups, custom link domains) is published in
+  the Messaging Hub help centre. All prices exclude GST; a 12-month minimum term and
+  a $25 one-off setup fee apply to every tier.
+sources:
+  - https://www.vodafone.com.au/business/messaging-hub
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/10821854444559-Messaging-Hub-Pricing
+  - https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/7126698561679-Extension-App-Pricing-Salesforce-Microsoft-Dynamics-ServiceNow-Zoho-NetSuite
+currency: AUD
+tax_note: All prices exclude GST.
+plans:
+  - id: messaging-hub-50
+    name: Messaging Hub $50
+    description: |
+      Entry tier — 650 included standard national SMS per month, REST API and web
+      portal access, 24/7 email and phone support.
+    entries:
+      - geo: AU
+        label: Plan fee (minimum monthly charge)
+        price: 50
+        unit: 1
+        metric: month
+        timeFrame: month
+      - geo: AU
+        label: Included standard national SMS
+        price: 0
+        unit: 650
+        metric: message
+        timeFrame: month
+      - geo: AU
+        label: Additional SMS to standard national numbers
+        price: 0.077
+        unit: 1
+        metric: message
+        timeFrame: usage
+      - geo: AU
+        label: One-off setup fee
+        price: 25
+        unit: 1
+        metric: account
+        timeFrame: once
+      - geo: AU
+        label: Total minimum cost (12 month term)
+        price: 625
+        unit: 1
+        metric: contract
+        timeFrame: term
+    elements:
+      - name: Access to our web portal
+      - name: Access to our REST API
+      - name: 24/7 Email and Phone Support
+      - name: Send SMS and MMS
+  - id: messaging-hub-100
+    name: Messaging Hub $100
+    entries:
+      - geo: AU
+        label: Plan fee (minimum monthly charge)
+        price: 100
+        unit: 1
+        metric: month
+        timeFrame: month
+      - geo: AU
+        label: Included standard national SMS
+        price: 0
+        unit: 1400
+        metric: message
+        timeFrame: month
+      - geo: AU
+        label: Additional SMS to standard national numbers
+        price: 0.071
+        unit: 1
+        metric: message
+        timeFrame: usage
+      - geo: AU
+        label: Total minimum cost (12 month term)
+        price: 1225
+        unit: 1
+        metric: contract
+        timeFrame: term
+    elements:
+      - name: Access to our web portal
+      - name: Access to our REST API
+      - name: 24/7 Email and Phone Support
+      - name: Send SMS and MMS
+  - id: messaging-hub-250
+    name: Messaging Hub $250
+    entries:
+      - geo: AU
+        label: Plan fee (minimum monthly charge)
+        price: 250
+        unit: 1
+        metric: month
+        timeFrame: month
+      - geo: AU
+        label: Included standard national SMS
+        price: 0
+        unit: 3800
+        metric: message
+        timeFrame: month
+      - geo: AU
+        label: Additional SMS to standard national numbers
+        price: 0.066
+        unit: 1
+        metric: message
+        timeFrame: usage
+      - geo: AU
+        label: Total minimum cost (12 month term)
+        price: 3025
+        unit: 1
+        metric: contract
+        timeFrame: term
+    elements:
+      - name: Access to our web portal
+      - name: Access to our REST API
+      - name: 24/7 Email and Phone Support
+      - name: Send SMS, MMS, Short Trackable Links and Mobile Landing Pages
+      - name: Access to customer onboarding
+  - id: messaging-hub-400
+    name: Messaging Hub $400
+    entries:
+      - geo: AU
+        label: Plan fee (minimum monthly charge)
+        price: 400
+        unit: 1
+        metric: month
+        timeFrame: month
+      - geo: AU
+        label: Included standard national SMS
+        price: 0
+        unit: 7000
+        metric: message
+        timeFrame: month
+      - geo: AU
+        label: Additional SMS to standard national numbers
+        price: 0.057
+        unit: 1
+        metric: message
+        timeFrame: usage
+      - geo: AU
+        label: Total minimum cost (12 month term)
+        price: 4825
+        unit: 1
+        metric: contract
+        timeFrame: term
+    elements:
+      - name: Access to our web portal
+      - name: Access to our REST API
+      - name: 24/7 Email and Phone Support
+      - name: Send SMS, MMS, Short Trackable Links and Mobile Landing Pages
+      - name: Access to customer onboarding
+  - id: messaging-hub-700
+    name: Messaging Hub $700
+    entries:
+      - geo: AU
+        label: Plan fee (minimum monthly charge)
+        price: 700
+        unit: 1
+        metric: month
+        timeFrame: month
+      - geo: AU
+        label: Included standard national SMS
+        price: 0
+        unit: 13000
+        metric: message
+        timeFrame: month
+      - geo: AU
+        label: Additional SMS to standard national numbers
+        price: 0.054
+        unit: 1
+        metric: message
+        timeFrame: usage
+      - geo: AU
+        label: Total minimum cost (12 month term)
+        price: 8425
+        unit: 1
+        metric: contract
+        timeFrame: term
+    elements:
+      - name: Access to our web portal
+      - name: Access to our REST API
+      - name: 24/7 Email and Phone Support
+      - name: Send SMS, MMS, Short Trackable Links and Mobile Landing Pages
+      - name: Access to customer onboarding
+addOns:
+  - label: Additional Dedicated Standard National Number (Bronze)
+    price: 29
+    metric: month
+  - label: Additional Dedicated Standard National Number (Silver)
+    price: 59
+    metric: month
+  - label: Additional Dedicated Standard National Number (Gold)
+    price: 99
+    metric: month
+  - label: HLR Lookup
+    price: 0.025
+    metric: number
+  - label: Number type lookup
+    price: 0.025
+    metric: number
+  - label: Carrier Lookup
+    price: 0.025
+    metric: number
+  - label: Familiar Sender
+    price: 10
+    metric: month
+  - label: Custom sub domain ('brand'.nxt.to/123abc) for SMS links
+    price: 149
+    metric: month
+  - label: Custom domain for SMS links
+    price: 249
+    metric: month
+terms:
+  minimum_term: 12 months
+  setup_fee: 25
+  critical_information_summary: https://www.vodafone.com.au/business/messaging-hub
+  self_serve_signup: false
+  note: >-
+    There is no free tier, no trial and no self-serve developer signup — accounts are
+    sold through Vodafone Business and API keys are minted by an account administrator
+    inside the console.
