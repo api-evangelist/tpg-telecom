@@ -1,0 +1,316 @@
+aid: tpg-telecom
+name: TPG Telecom
+review:
+  question: >-
+    Does TPG Telecom publish a first-party developer portal, downloadable API
+    specifications, and CAMARA / GSMA Open Gateway network APIs?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: Australia
+  tier: mno-carrier
+  gated: true
+findings:
+  summary: |
+    TPG Telecom publishes no first-party developer portal and no downloadable
+    OpenAPI. Every probed developer hostname on the primary domain either fails
+    to resolve or 404s: developer.tpgtelecom.com.au, developers.tpgtelecom.com.au,
+    docs.tpgtelecom.com.au, opengateway.tpgtelecom.com.au and
+    developers.opengateway.tpgtelecom.com.au do not resolve; /developer, /api and
+    /opengateway on www.tpgtelecom.com.au return 404. The same is true of the
+    Vodafone Australia brand domain (developer.vodafone.com.au and
+    developers.vodafone.com.au do not resolve).
+
+    The organisation's only public, callable developer surface is the Vodafone
+    Business Messaging Hub — and it is not TPG's own software. messaging.tpgtelecom.com.au
+    returns HTTP 200 with the page title "Login to Sinch Engage | Messaging Platform
+    for Growing Businesses", i.e. a white-labelled Sinch MessageMedia CPaaS console
+    on a TPG-branded host. The API host api.messaging.tpgtelecom.com.au is live and
+    returns 401 Unauthorized on /v1/messages, /v1/replies, /v1/delivery_reports,
+    /v1/webhooks and /api/v1/contacts/contacts while returning 404 on unrouted
+    paths. Documentation is a Zendesk help centre (support.messaging.tpgtelecom.com.au)
+    whose "Developer Guides" category contains five articles, and whose Contacts API
+    article embeds an Apiary project (subdomain contactsapiv1tgp) whose owner field
+    reads "MessageMedia". TPG Telecom's help-centre article on API credentials ends
+    with the line "connect with your Sinch MessageMedia account" — the aggregator
+    relationship is stated in TPG's own documentation.
+
+    CAMARA / GSMA Open Gateway: TPG Telecom is a stated non-participant. No CAMARA
+    API is exposed, no Open Gateway portal exists, and TPG is not on the operator
+    side of Aduna. In Australia, Telstra went live first with Number Verification and
+    SIM Swap delivered to Aduna Global, and Optus said it would follow; TPG Telecom's
+    senior customer security, fraud and scam governance manager stated publicly:
+    "We're closely watching developments like GSMA Open Gateway, but our priority
+    right now is delivering practical, locally-focused scam prevention measures."
+    That is a watching brief, not an implementation — and there is not even a press
+    release claiming otherwise.
+
+    TM Forum: no Open API conformance certification (TMF620, TMF622, TMF641 or any
+    other) was found for TPG Telecom in the TM Forum conformance record. 3GPP: no NEF
+    or SCEF exposure surface, no network-slicing API and no edge/MEC API is published.
+    The IoT product page for Managed IoT Connectivity states only that the platform
+    offers "A catalogue of API's (access programming interface) and APNs (access point
+    name) making integration with third party applications like analytic platforms
+    easy and secure" — a marketing mention with no named API, no documentation link
+    and no portal. TPG Telecom runs Google Cloud Apigee for API management internally,
+    which confirms an API programme exists behind the wall while none of it is public.
+  developerPortal:
+    firstParty: false
+    url: ''
+    note: >-
+      No first-party developer portal. The nearest thing is a Zendesk help centre for
+      a white-labelled CPaaS product.
+    probed:
+    - url: https://www.tpgtelecom.com.au/
+      status: 200
+      verdict: corporate marketing site, no developer or API navigation
+    - url: https://developer.tpgtelecom.com.au/
+      status: 000
+      verdict: does not resolve
+    - url: https://developers.tpgtelecom.com.au/
+      status: 000
+      verdict: does not resolve
+    - url: https://docs.tpgtelecom.com.au/
+      status: 000
+      verdict: does not resolve
+    - url: https://api.tpgtelecom.com.au/
+      status: 404
+      verdict: host resolves, root 404, no documented API surface
+    - url: https://www.tpgtelecom.com.au/developer
+      status: 404
+    - url: https://www.tpgtelecom.com.au/api
+      status: 404
+    - url: https://www.tpgtelecom.com.au/opengateway
+      status: 404
+    - url: https://opengateway.tpgtelecom.com.au/
+      status: 000
+      verdict: does not resolve — no Open Gateway portal
+    - url: https://developer.vodafone.com.au/
+      status: 000
+      verdict: does not resolve
+    - url: https://developers.vodafone.com.au/
+      status: 000
+      verdict: does not resolve
+    - url: https://api.vodafone.com.au/
+      status: 404
+    - url: https://support.messaging.tpgtelecom.com.au/hc/en-us
+      status: 403
+      verdict: >-
+        Zendesk help centre behind a Cloudflare bot challenge for automated clients;
+        publicly readable in a browser. Content enumerated via the anonymous Zendesk
+        Help Center API (200).
+    - url: https://messaging.tpgtelecom.com.au/
+      status: 200
+      verdict: >-
+        login wall — page title "Login to Sinch Engage | Messaging Platform for
+        Growing Businesses"; white-labelled Sinch MessageMedia console
+    - url: https://www.vodafone.com.au/business/messaging-hub
+      status: 200
+      verdict: product marketing page; states "Access to our REST API" on all plans
+    - url: https://contactsapiv1tgp.docs.apiary.io/
+      status: 200
+      verdict: real API reference — Apiary API Blueprint, project owner "MessageMedia"
+  specifications:
+    openapiFound: false
+    openapiCount: 0
+    apiBlueprintCount: 1
+    note: >-
+      No OpenAPI or Swagger document is published anywhere on TPG Telecom or Vodafone
+      Australia hosts. /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json,
+      /api-docs, /spec, /redoc and /docs on api.messaging.tpgtelecom.com.au all return
+      404. The Apiary project backing the Contacts API declares
+      apiDescriptionFormat "apiblueprint"; its /swagger.json endpoint returns Apiary
+      project metadata (name, subdomain, owner, mock/proxy URLs), not a Swagger
+      document with paths. One real machine-readable description was harvested — an
+      API Blueprint, not an OpenAPI — and is stored verbatim.
+    harvested:
+    - path: blueprint/tpg-telecom-contacts-management-api.apib
+      format: API Blueprint 1A
+      title: Contacts Management API
+      sourceURL: https://contactsapiv1tgp.docs.apiary.io/api-description-document
+      mirrorURL: https://jsapi.apiary.io/apis/contactsapiv1tgp.apib
+      httpStatus: 200
+      bytes: 375309
+      fetched: '2026-07-25'
+      apiaryProjectOwner: MessageMedia
+      apiaryLastUpdated: '2025-12-12T17:53:08.278Z'
+      declaredBaseURI: https://api.messaging.tpgtelecom.com.au
+      operations: 18
+      note: >-
+        Embedded by TPG Telecom in its own help centre article "Contacts API" via a
+        jsapi.apiary.io iframe. Saved verbatim as fetched; NOT placed in openapi/
+        because it is API Blueprint and does not parse as an OpenAPI document.
+  camara:
+    posture: >-
+      Non-participant — publicly "closely watching" GSMA Open Gateway with nothing
+      callable, no portal, and no Aduna listing.
+    exposesCamaraAPIs: false
+    camaraAPIs: []
+    openGatewayMember: false
+    adunaChannel: false
+    pressReleaseOnly: false
+    evidence: >-
+      No CAMARA reference exists on any TPG Telecom or Vodafone Australia host. No
+      opengateway subdomain resolves. TPG's own public statement, from its senior
+      customer security, fraud and scam governance manager: "We're closely watching
+      developments like GSMA Open Gateway, but our priority right now is delivering
+      practical, locally-focused scam prevention measures." Australia's CAMARA supply
+      comes from Telstra (Number Verification and SIM Swap, released to Aduna Global)
+      with Optus following; TPG Telecom is on neither list. This is weaker than a
+      press-release-only posture — there is no press release to discount.
+    source: >-
+      https://www.itnews.com.au/news/telstra-first-out-of-gates-in-australia-with-anti-fraud-apis-for-network-623999
+  tmForum:
+    conformanceCertified: false
+    certifiedAPIs: []
+    note: >-
+      No TM Forum Open API conformance certification found for TPG Telecom. The
+      certification register entries surfaced for this space belong to BSS/OSS vendors
+      (SAP, Etiya, Lifecycle Software, STL) rather than to TPG.
+  threeGPP:
+    nefScefSurface: false
+    networkSlicingAPI: false
+    edgeMecAPI: false
+    note: >-
+      Vodafone Business Australia sells Mobile Private Network and Managed IoT
+      Connectivity as managed services with a portal; no NEF/SCEF, slicing or MEC API
+      is documented. The IoT connectivity page mentions "a catalogue of API's" without
+      naming, linking or documenting any.
+  auth:
+    schemes:
+    - HTTP Basic — Authorization: Basic Base64(api_key:api_secret)
+    - HMAC — Authorization: hmac username="<API KEY>", algorithm="hmac-sha1", headers="Date Content-MD5 request-line", signature="<SIGNATURE>"
+    - Legacy username/password API credentials (Sinch MessageMedia legacy scheme)
+    oauth2: false
+    oidc: false
+    ciba: false
+    mtls: false
+    cibaNote: >-
+      CIBA (Client-Initiated Backchannel Authentication), which CAMARA specifies for
+      network-based authorization alongside OIDC, does not appear anywhere. There is
+      no CAMARA surface to authorize against.
+    wellKnownProbes:
+    - url: https://api.messaging.tpgtelecom.com.au/.well-known/openid-configuration
+      status: 404
+    - url: https://api.messaging.tpgtelecom.com.au/.well-known/oauth-authorization-server
+      status: 404
+    credentialIssuance: >-
+      API keys are minted inside the Messaging Hub console (Settings > API Settings) by
+      account administrators only; the secret is shown once. There is no public
+      self-serve developer signup.
+  webhooks:
+    supported: true
+    asyncapiPublished: false
+    configuration: >-
+      Console-configured (Settings > API > Webhooks). The subscriber chooses events,
+      HTTP method, target URL, custom headers, and a templated JSON body using
+      variables such as $mtID, $accountId, $sourceAddress, $destinationAddress,
+      $mtContent and $moContent.
+    events:
+    - SMS -> Receive SMS
+    - SMS -> Opt-out occurred
+    - Delivery Reports -> Message is delivered
+    - Delivery Reports -> Message has expired
+    source: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4693850901263-Create-manage-webhooks
+  sdks:
+    firstParty: false
+    note: >-
+      No TPG Telecom SDK packages on npm, PyPI, Maven or NuGet. github.com/tpgtelecom
+      exists as "TPG Telecom Limited" with 0 public repositories. github.com/tpg-telecom
+      is an unrelated account (repos: tpg, gym, telecom). Any SDKs a Messaging Hub
+      customer would use are Sinch MessageMedia's, published under github.com/messagemedia.
+  otherSurfaces:
+    postmanWorkspace: false
+    graphql: false
+    grpc: false
+    asyncapi: false
+    mcp: false
+  channelToDevelopers: >-
+    Aggregator-mediated. TPG Telecom's messaging API is a rebranded Sinch MessageMedia
+    (Sinch Engage) product, its network APIs do not exist, and its CAMARA supply — if
+    an Australian developer wants Number Verification or SIM Swap — comes from Telstra
+    via Aduna, not from TPG. Developers do not reach the TPG network through TPG.
+  transports:
+  - protocol: REST
+    scheme: https
+    baseURL: https://api.messaging.tpgtelecom.com.au
+    documented: true
+    note: >-
+      Live. Anonymous probes on 2026-07-25 returned 401 on /v1/messages, /v1/replies,
+      /v1/delivery_reports, /v1/webhooks and /api/v1/contacts/contacts; 404 on
+      /messages and /api/v1/messages.
+  - protocol: Webhooks
+    scheme: https
+    documented: true
+    note: Outbound HTTP callbacks configured in the Messaging Hub console.
+  - protocol: SMPP
+    documented: false
+    note: >-
+      SMPP is offered by the underlying Sinch MessageMedia gateway; no TPG-branded SMPP
+      binding details are published on a TPG host.
+  - protocol: GraphQL
+    documented: false
+  - protocol: gRPC
+    documented: false
+  - protocol: WebSocket
+    documented: false
+sources:
+- url: https://www.tpgtelecom.com.au/
+  type: Website
+  status: 200
+  note: Corporate site. Brands listed as Vodafone, TPG, iiNet, Lebara, felix. No developer or API navigation.
+- url: https://www.vodafone.com.au/business/messaging-hub
+  type: Documentation
+  status: 200
+  note: Product page; "Access to our REST API" on all plan tiers; links to the support hub and the console login.
+- url: https://messaging.tpgtelecom.com.au/
+  type: Portal
+  status: 200
+  note: Login wall. Page title identifies it as Sinch Engage.
+- url: https://support.messaging.tpgtelecom.com.au/hc/en-us
+  type: Documentation
+  status: 403
+  note: >-
+    Zendesk help centre, Cloudflare-challenged for bots. 96 articles enumerated via the
+    anonymous Zendesk Help Center API; the Developer Guides category holds 5 (Contacts
+    API, API Documentation, Creating new API credentials, Managing Existing API
+    Credentials, Create & manage webhooks).
+- url: https://contactsapiv1tgp.docs.apiary.io/
+  type: APIReference
+  status: 200
+  note: Apiary API Blueprint for the Contacts Management API; project owner "MessageMedia".
+- url: https://contactsapiv1tgp.docs.apiary.io/api-description-document
+  type: APIBlueprint
+  status: 200
+  note: Source of the harvested 375,309-byte API Blueprint saved in blueprint/.
+- url: https://api.messaging.tpgtelecom.com.au/api/v1/contacts/contacts
+  type: APIEndpoint
+  status: 401
+  note: '{"message":"Unauthorized"} — live API, credentials required.'
+- url: https://www.itnews.com.au/news/telstra-first-out-of-gates-in-australia-with-anti-fraud-apis-for-network-623999
+  type: Article
+  note: >-
+    Primary evidence for the CAMARA posture — Telstra live via Aduna, Optus following,
+    TPG "closely watching".
+- url: https://www.vodafone.com.au/business/internet-of-things/connectivity
+  type: Documentation
+  status: 200
+  note: >-
+    Managed IoT Connectivity; mentions "A catalogue of API's" with no named API, link or docs.
+- url: https://cloud.google.com/blog/products/api-management/tpg-telecom-selects-apigee-for-api-management/
+  type: Article
+  note: TPG Telecom runs Apigee for API management — an internal API programme with no public face.
+- url: https://www.tpgtelecom.com.au/.well-known/security.txt
+  type: VulnerabilityDisclosure
+  status: 200
+  note: 'Contact: mailto:vulnerability@tpgtelecom.com.au; Expires 2027-01-01.'
+actions:
+  apisYmlCreated: true
+  apisListed: 2
+  openapiDirectory: false
+  blueprintPath: blueprint/tpg-telecom-contacts-management-api.apib
+  reason: >-
+    Two real APIs are listed because both are documented and live on TPG-branded hosts.
+    No openapi/ directory was created because no OpenAPI or Swagger document exists to
+    harvest; the one machine-readable description found is an API Blueprint and is
+    stored, verbatim and unconverted, under blueprint/.

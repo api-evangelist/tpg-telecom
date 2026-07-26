@@ -1,0 +1,125 @@
+aid: tpg-telecom
+url: https://raw.githubusercontent.com/api-evangelist/tpg-telecom/refs/heads/main/apis.yml
+name: TPG Telecom
+kind: company
+description: >-
+  TPG Telecom Limited is Australia's second-largest telecommunications company and
+  an ASX-listed mobile network operator and fixed broadband carrier, formed by the
+  2020 merger of Vodafone Hutchison Australia and TPG Corporation. It runs its own
+  mobile network reaching 98.4% of the Australian population and sells under the
+  Vodafone, TPG, iiNet, Internode, Lebara and felix brands, with business, enterprise,
+  government and wholesale services consolidated under Vodafone Business. In the
+  telecom API value chain TPG Telecom sits squarely on the network side and not the
+  developer side: it publishes no first-party developer portal, no downloadable
+  OpenAPI, and no network APIs. Its only public, callable developer surface is the
+  Vodafone Business Messaging Hub — a white-labelled Sinch MessageMedia (Sinch Engage)
+  CPaaS platform running on TPG-branded hosts at messaging.tpgtelecom.com.au and
+  api.messaging.tpgtelecom.com.au, with documentation served from a Zendesk help
+  centre and an Apiary API Blueprint owned by MessageMedia. On the sector's defining
+  signal, CAMARA and GSMA Open Gateway, TPG Telecom is a stated non-participant:
+  while Telstra went live with Number Verification and SIM Swap through Aduna and
+  Optus signalled it would follow, TPG's public position is that it is "closely
+  watching developments like GSMA Open Gateway" while prioritising local scam
+  prevention — a watching brief, not an implementation. TPG Telecom is therefore
+  partner-gated and aggregator-mediated: developers reach its network through a
+  CPaaS supplier, not through TPG.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Telecommunications
+- Australia
+- Mobile Network Operator
+- Broadband
+- Messaging
+- SMS
+- IoT
+- 5G
+- Partner Gated
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis:
+- aid: tpg-telecom:tpg-telecom-messaging-hub-contacts-api
+  name: TPG Telecom Messaging Hub Contacts API
+  description: >-
+    Contacts Management API for the Vodafone Business Messaging Hub, providing CRUD
+    over contacts, lists and custom fields for SMS/MMS campaigns. Documented as an
+    Apiary API Blueprint (project subdomain contactsapiv1tgp, owner "MessageMedia")
+    embedded in the TPG Telecom Messaging Hub help centre. The blueprint declares the
+    base URI https://api.messaging.tpgtelecom.com.au and 18 operations across
+    /api/v1/contacts/contacts, /api/v1/contacts/lists and /api/v1/contacts/custom-fields.
+    Authentication is HTTP Basic (Base64 api_key:api_secret) or an hmac-sha1 signed
+    Authorization header. No OpenAPI or Swagger document is published — the Apiary
+    project's description format is apiblueprint, and its swagger.json endpoint returns
+    project metadata only.
+  humanURL: https://contactsapiv1tgp.docs.apiary.io/
+  baseURL: https://api.messaging.tpgtelecom.com.au
+  tags:
+  - Contacts
+  - Messaging
+  - CPaaS
+  properties:
+  - type: APIBlueprint
+    url: blueprint/tpg-telecom-contacts-management-api.apib
+  - type: APIReference
+    url: https://contactsapiv1tgp.docs.apiary.io/
+  - type: Documentation
+    url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/11469281100559-Contacts-API
+  - type: Documentation
+    url: https://support.messaging.tpgtelecom.com.au/hc/en-us/sections/4750925238671-REST-API-Documentation
+  - type: Authentication
+    url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+- aid: tpg-telecom:tpg-telecom-messaging-hub-rest-api
+  name: TPG Telecom Messaging Hub REST API
+  description: >-
+    The SMS/MMS REST API of the Vodafone Business Messaging Hub, listed on the product
+    page as "Access to our REST API" on every plan tier. The API is live on the
+    TPG-branded host https://api.messaging.tpgtelecom.com.au — anonymous probes on
+    2026-07-25 returned HTTP 401 Unauthorized (route present, credentials required)
+    for /v1/messages, /v1/replies, /v1/delivery_reports and /v1/webhooks, while
+    unrouted paths returned 404. Credentials are issued from the Messaging Hub console
+    as REST Basic, REST HMAC, or legacy username/password keys. The full reference is
+    not published as a first-party developer portal; the platform is a white-labelled
+    Sinch MessageMedia deployment and the help centre's "API Documentation" article is
+    served behind a Cloudflare bot challenge. No OpenAPI, Swagger, AsyncAPI, Postman
+    collection, GraphQL surface, or first-party SDK was found.
+  humanURL: https://support.messaging.tpgtelecom.com.au/hc/en-us/sections/4750925238671-REST-API-Documentation
+  baseURL: https://api.messaging.tpgtelecom.com.au
+  tags:
+  - Messaging
+  - SMS
+  - MMS
+  - Webhooks
+  - CPaaS
+  properties:
+  - type: Documentation
+    url: https://support.messaging.tpgtelecom.com.au/hc/en-us/sections/4750925238671-REST-API-Documentation
+  - type: Documentation
+    url: https://www.vodafone.com.au/business/messaging-hub
+  - type: APIReference
+    url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750142926479-API-Documentation
+  - type: Webhooks
+    url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4693850901263-Create-manage-webhooks
+  - type: Authentication
+    url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
+  - type: SignUp
+    url: https://messaging.tpgtelecom.com.au/login
+common:
+- type: Website
+  url: https://www.tpgtelecom.com.au/
+- type: About
+  url: https://www.tpgtelecom.com.au/about-us
+- type: Documentation
+  url: https://support.messaging.tpgtelecom.com.au/hc/en-us
+- type: VulnerabilityDisclosure
+  url: https://www.tpgtelecom.com.au/.well-known/security.txt
+- type: GitHubOrganization
+  url: https://github.com/tpgtelecom
+- type: LinkedIn
+  url: https://www.linkedin.com/company/tpg-telecom/
+- type: InvestorRelations
+  url: https://www.tpgtelecom.com.au/investor-relations
+- type: Review
+  url: review.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
