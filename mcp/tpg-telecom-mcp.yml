@@ -2,16 +2,14 @@ generated: '2026-07-25'
 method: derived
 status: candidate
 source: blueprint/tpg-telecom-contacts-management-api.apib
-description: >-
-  TPG Telecom publishes no Model Context Protocol server, and none is listed in the
-  official MCP registry or in the Messaging Hub help centre. One live finding is worth
-  recording: the API gateway at api.messaging.tpgtelecom.com.au routes an /mcp prefix
-  and answers it with 401 Unauthorized, while unrouted paths on the same host answer
-  404 — so something is mounted there behind credentials. Anonymous tools/list is
-  rejected, so no tool schema could be read and the route is NOT claimed here as a
-  confirmed MCP server. The candidate tool set below is DERIVED from the 18 real
-  operations in TPG's published Contacts Management API Blueprint as a proposal for an
-  agent-facing surface; it is not published by TPG Telecom.
+description: 'TPG Telecom publishes no Model Context Protocol server, and none is listed in the official
+  MCP registry or in the Messaging Hub help centre. One live finding is worth recording: the API gateway
+  at api.messaging.tpgtelecom.com.au routes an /mcp prefix and answers it with 401 Unauthorized, while
+  unrouted paths on the same host answer 404 — so something is mounted there behind credentials. Anonymous
+  tools/list is rejected, so no tool schema could be read and the route is NOT claimed here as a confirmed
+  MCP server. The candidate tool set below is DERIVED from the 18 real operations in TPG''s published
+  Contacts Management API Blueprint as a proposal for an agent-facing surface; it is not published by
+  TPG Telecom.'
 server: null
 transport: null
 published: false
@@ -37,20 +35,23 @@ probe:
     status: 404
   - url: https://api.messaging.tpgtelecom.com.au/apizzz
     status: 404
-  interpretation: >-
-    The gateway matches /mcp as a routed prefix (any suffix returns 401) while
-    arbitrary paths return 404. Consistent with an auth-gated endpoint mounted at
-    /mcp; the protocol spoken there cannot be verified without Messaging Hub
-    credentials, and no TPG or Sinch documentation references it.
+  interpretation: The gateway matches /mcp as a routed prefix (any suffix returns 401) while arbitrary
+    paths return 404. Consistent with an auth-gated endpoint mounted at /mcp; the protocol spoken there
+    cannot be verified without Messaging Hub credentials, and no TPG or Sinch documentation references
+    it.
 auth:
   type: http
-  schemes: [Basic (api_key:api_secret), HMAC-SHA1]
+  schemes:
+  - Basic (api_key:api_secret)
+  - HMAC-SHA1
   detail: authentication/tpg-telecom-authentication.yml
-  note: The API has no OAuth surface, so an MCP client would carry a static account key rather than a delegated token.
+  note: The API has no OAuth surface, so an MCP client would carry a static account key rather than a
+    delegated token.
 candidate_tools:
 - name: create_contact
   maps_to: POST /api/v1/contacts/contacts
-  description: Create a contact with one or more channels, optionally assigning lists and custom field values.
+  description: Create a contact with one or more channels, optionally assigning lists and custom field
+    values.
   consequence: write
 - name: get_contact
   maps_to: GET /api/v1/contacts/contacts/{contactId}
@@ -66,7 +67,8 @@ candidate_tools:
   consequence: write
 - name: retrieve_contacts
   maps_to: GET /api/v1/contacts/contacts
-  description: Page through contacts, filtered by list, contact id, channel id, channel type or subscription state.
+  description: Page through contacts, filtered by list, contact id, channel id, channel type or subscription
+    state.
   consequence: read
 - name: create_list
   maps_to: POST /api/v1/contacts/lists
@@ -121,11 +123,13 @@ candidate_tools:
   description: Page through custom field definitions, filtered by id, label or mergeTag.
   consequence: read
 notes:
-- >-
-  No tool crosswalk artifact is emitted: a crosswalk binds MCP tools to OpenAPI
-  operationIds, and TPG Telecom publishes no OpenAPI — the only machine-readable
-  description is an API Blueprint, whose actions carry no operationIds.
-- >-
-  Messaging (send SMS/MMS, replies, delivery reports) has no published reference on a
-  TPG host, so no candidate tools are proposed for it despite the routes being live
-  and credential-gated.
+- 'No tool crosswalk artifact is emitted: a crosswalk binds MCP tools to OpenAPI operationIds, and TPG
+  Telecom publishes no OpenAPI — the only machine-readable description is an API Blueprint, whose actions
+  carry no operationIds.'
+- Messaging (send SMS/MMS, replies, delivery reports) has no published reference on a TPG host, so no
+  candidate tools are proposed for it despite the routes being live and credential-gated.
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census
