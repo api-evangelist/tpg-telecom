@@ -88,6 +88,12 @@ apis:
   - Messaging
   - SMS
   - MMS
+  - Webhook
+  - CPaaS
+  tags_raw:
+  - Messaging
+  - SMS
+  - MMS
   - Webhooks
   - CPaaS
   properties:
