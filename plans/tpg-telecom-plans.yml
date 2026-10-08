@@ -227,3 +227,76 @@ terms:
     There is no free tier, no trial and no self-serve developer signup — accounts are
     sold through Vodafone Business and API keys are minted by an account administrator
     inside the console.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  units:
+  - message
+  - negotiated
+  - object
+  - period
+  plans:
+  - name: Messaging Hub $50
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - message
+    - negotiated
+    - object
+    - period
+    periods:
+    - month
+    - one-time
+    - per-use
+    - term
+  - name: Messaging Hub $100
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - message
+    - negotiated
+    - period
+    periods:
+    - month
+    - per-use
+    - term
+  - name: Messaging Hub $250
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - message
+    - negotiated
+    - period
+    periods:
+    - month
+    - per-use
+    - term
+  - name: Messaging Hub $400
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - message
+    - negotiated
+    - period
+    periods:
+    - month
+    - per-use
+    - term
+  - name: Messaging Hub $700
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - message
+    - negotiated
+    - period
+    periods:
+    - month
+    - per-use
+    - term
