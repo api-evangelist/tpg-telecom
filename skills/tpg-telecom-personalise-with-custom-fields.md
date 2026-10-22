@@ -1,5 +1,6 @@
 ---
-name: Personalise messages with custom fields
+name: tpg-telecom-personalise-with-custom-fields
+title: Personalise messages with custom fields
 description: Define account-level custom fields and merge tags in the Vodafone Business Messaging Hub, set their values on contacts, and use them to personalise SMS content.
 api: blueprint/tpg-telecom-contacts-management-api.apib
 base_url: https://api.messaging.tpgtelecom.com.au

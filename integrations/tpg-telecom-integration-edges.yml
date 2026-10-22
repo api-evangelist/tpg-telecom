@@ -1,3 +1,25 @@
+generated: '2026-10-20'
+method: searched
+source:
+- https://www.peeringdb.com/api/net
+- https://www.peeringdb.com/api/ix
+- https://www.peeringdb.com/api/fac
+- https://manrs.org/netops/participants/
+- https://zapier.com/apps/tpg-telecom/integrations
+- https://n8n.io/integrations/tpg-telecom/
+- https://composio.dev/toolkits/tpg-telecom
+- https://monid.ai/tools/tpg-telecom
+checked:
+- https://manrs.org/netops/participants/
+- https://www.peeringdb.com/api/fac
+- https://www.peeringdb.com/api/ix
+- https://www.peeringdb.com/api/net
+- https://composio.dev/toolkits/tpg-telecom
+- https://monid.ai/tools/tpg-telecom
+- https://n8n.io/integrations/tpg-telecom/
+- https://zapier.com/apps/tpg-telecom/integrations
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: PeeringDB (interconnection register)
   partner: null
@@ -30,15 +52,4 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-network-edge.py
   first_seen: '2026-10-20'
-generated: '2026-10-20'
-method: searched
-source:
-- https://www.peeringdb.com/api/net
-- https://www.peeringdb.com/api/ix
-- https://www.peeringdb.com/api/fac
-- https://manrs.org/netops/participants/
-checked:
-- https://manrs.org/netops/participants/
-- https://www.peeringdb.com/api/fac
-- https://www.peeringdb.com/api/ix
-- https://www.peeringdb.com/api/net
+templates: []

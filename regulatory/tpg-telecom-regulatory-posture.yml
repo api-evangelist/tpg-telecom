@@ -1,0 +1,56 @@
+generated: '2026-10-20'
+method: searched
+source:
+- https://www.tpgtelecom.com.au/about-us/privacy
+signals:
+  data_subject_request:
+    url: https://www.tpgtelecom.com.au/about-us/privacy
+    section: Can you access and correct the personal information we hold about you?
+    rights_named: [access, correction]
+    escalation: Australian Privacy Commissioner or the Telecommunications Industry Ombudsman
+    evidence:
+    - source: https://www.tpgtelecom.com.au/about-us/privacy
+      http_status: 200
+      fetched: '2026-10-20'
+      quote: "Yes, but there may be times where we cannot grant you access to the personal information we hold. For example, we may not grant access to information if it could interfere with the privacy of others or if it would result in a breach of confidentiality. If that happens, we will give you written reasons for any refusal."
+    - source: https://www.tpgtelecom.com.au/about-us/privacy
+      http_status: 200
+      fetched: '2026-10-20'
+      quote: "We may charge reasonable administrative costs for responding to privacy information requests, however we will not charge you for simply making the request or for making any corrections to your personal information."
+    - source: https://www.tpgtelecom.com.au/about-us/privacy
+      http_status: 200
+      fetched: '2026-10-20'
+      quote: "If you believe that we have not dealt with your concerns you may lodge a complaint with the Australian Privacy Commissioner or the Telecommunications Industry Ombudsman."
+    note: >-
+      Australian Privacy Act access and correction rights, exercised via account login or a request form;
+      refusals come with written reasons, and escalation is to the OAIC or TIO. No deletion or portability
+      right and no response SLA for access requests is stated on the page.
+  data_residency:
+    url: https://www.tpgtelecom.com.au/about-us/privacy
+    section: Do we disclose your personal information outside Australia?
+    regions_named: [UK, Germany, Italy, Egypt, India, Fiji, Canada, European Union, Japan, New Zealand, Philippines, Singapore, Malaysia, South Africa, Indonesia, USA]
+    evidence:
+    - source: https://www.tpgtelecom.com.au/about-us/privacy
+      http_status: 200
+      fetched: '2026-10-20'
+      quote: "We may store or sometimes disclose personal information to entities outside Australia. Some of these entities are: Companies within the Vodafone Group Plc group of companies located in the UK, Germany, Italy, Egypt and India TPG Group’s data hosting and other service providers located in Fiji, Canada, countries within the European Union, United Kingdom, India, Japan, New Zealand, the Philippines, Singapore, Malaysia, South Africa, Indonesia, and the USA"
+    note: >-
+      A disclosure that data is NOT kept onshore-only: it names the countries where Vodafone group companies
+      and TPG's hosting/service providers that may store or receive personal information are located. This
+      is an offshore-disclosure statement, not a residency guarantee.
+  data_retention:
+    url: https://www.tpgtelecom.com.au/about-us/privacy
+    section: What personal information do we collect?
+    evidence:
+    - source: https://www.tpgtelecom.com.au/about-us/privacy
+      http_status: 200
+      fetched: '2026-10-20'
+      quote: "We may also collect personal information about you in accordance with our obligations under the data retention provisions of the Telecommunications (Interception and Access) Act 1979 (Cth)."
+    - source: https://www.tpgtelecom.com.au/about-us/privacy
+      http_status: 200
+      fetched: '2026-10-20'
+      quote: "We run checks of our systems, service providers and staff to make sure that your personal information is held and used properly."
+    note: >-
+      The policy cites the statutory metadata-retention regime (TIA Act) as a basis for collection, but
+      states no retention periods or deletion schedule of its own. The second quote is about handling
+      controls, not duration; recorded so a reader can see no period is given.

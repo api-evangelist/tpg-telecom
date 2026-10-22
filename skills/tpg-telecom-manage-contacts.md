@@ -1,5 +1,6 @@
 ---
-name: Manage contacts in the Vodafone Business Messaging Hub
+name: tpg-telecom-manage-contacts
+title: Manage contacts in the Vodafone Business Messaging Hub
 description: Create, retrieve, update and delete contacts (and their SMS/WhatsApp channels) in the TPG Telecom Messaging Hub Contacts API, honouring subscription state and the platform's non-idempotent write semantics.
 api: blueprint/tpg-telecom-contacts-management-api.apib
 base_url: https://api.messaging.tpgtelecom.com.au

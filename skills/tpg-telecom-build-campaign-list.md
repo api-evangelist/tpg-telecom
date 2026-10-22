@@ -1,5 +1,6 @@
 ---
-name: Build and maintain a campaign list
+name: tpg-telecom-build-campaign-list
+title: Build and maintain a campaign list
 description: Create a contact list in the Vodafone Business Messaging Hub and manage its membership one contact at a time or in bulk, using the TPG Telecom Contacts API list operations.
 api: blueprint/tpg-telecom-contacts-management-api.apib
 base_url: https://api.messaging.tpgtelecom.com.au

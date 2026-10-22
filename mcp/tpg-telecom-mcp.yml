@@ -10,7 +10,6 @@ description: 'TPG Telecom publishes no Model Context Protocol server, and none i
   MCP server. The candidate tool set below is DERIVED from the 18 real operations in TPG''s published
   Contacts Management API Blueprint as a proposal for an agent-facing surface; it is not published by
   TPG Telecom.'
-server: null
 transport: null
 published: false
 probe:
@@ -39,6 +38,25 @@ probe:
     paths return 404. Consistent with an auth-gated endpoint mounted at /mcp; the protocol spoken there
     cannot be verified without Messaging Hub credentials, and no TPG or Sinch documentation references
     it.
+  recheck_2026_10_20:
+    source: preflight-wave.py (GET only)
+    results:
+    - url: https://api.messaging.tpgtelecom.com.au/mcp
+      status: 401
+      control_status: 401
+      verdict: opaque
+    - url: https://support.messaging.tpgtelecom.com.au/mcp
+      status: 401
+      control_status: 401
+      verdict: opaque
+    - url: https://status.messaging.tpgtelecom.com.au/mcp
+      status: 403
+      control_status: 403
+      verdict: opaque
+    interpretation: 'On 2026-10-20 the control (unrouted) path on api.messaging.tpgtelecom.com.au also
+      answers 401, so the edge authenticates before it routes. The July finding that /mcp was a distinctly
+      routed prefix no longer holds; the 401 on /mcp proves nothing about an MCP server. No TPG/Sinch
+      documentation names an MCP endpoint (mcp_tool_table l3: no-mcp-docs-found).'
 auth:
   type: http
   schemes:
@@ -128,8 +146,12 @@ notes:
   carry no operationIds.'
 - Messaging (send SMS/MMS, replies, delivery reports) has no published reference on a TPG host, so no
   candidate tools are proposed for it despite the routes being live and credential-gated.
+- The 2026-07-25 POST tools/list probe recorded above predates the roadmap#992 probe-safety rule (no JSON-RPC
+  to undocumented endpoints) and was not repeated.
 deployment:
   mode: none
+  auth: unknown
   verified: derived
-  checked: '2026-08-12'
-  source: catalog MCP census
+  checked: '2026-10-20'
+  source: preflight-wave.py dossier 2026-10-20 (contract_discovery.opaque) + candidate derived from blueprint/tpg-telecom-contacts-management-api.apib
+  note: No MCP server is documented or advertised by TPG Telecom; no endpoint is recorded.

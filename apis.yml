@@ -1,7 +1,11 @@
 aid: tpg-telecom
+
 url: https://raw.githubusercontent.com/api-evangelist/tpg-telecom/refs/heads/main/apis.yml
+
 name: TPG Telecom
+
 kind: company
+
 description: >-
   TPG Telecom Limited is Australia's second-largest telecommunications company and
   an ASX-listed mobile network operator and fixed broadband carrier, formed by the
@@ -23,6 +27,7 @@ description: >-
   prevention — a watching brief, not an implementation. TPG Telecom is therefore
   partner-gated and aggregator-mediated: developers reach its network through a
   CPaaS supplier, not through TPG.
+
 deliveryModel:
   model: saas
   open_source: false
@@ -34,6 +39,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: paid
   onboarding: unknown
@@ -52,7 +58,9 @@ accessModel:
   - security
   generated: '2026-09-03'
   method: derived
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+
+image: https://www.tpgtelecom.com.au/themes/custom/tpg/TPG_Telecom_Logo_RGB.png
+
 tags:
 - Telecommunications
 - Australia
@@ -62,9 +70,98 @@ tags:
 - SMS
 - IoT
 - 5G
+
 created: '2026-07-25'
-modified: '2026-07-25'
+
+modified: '2026-10-20'
+
 specificationVersion: '0.23'
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
+common:
+- type: Deprecation
+  url: lifecycle/tpg-telecom-lifecycle.yml
+- type: Hosts
+  url: hosts/tpg-telecom-hosts.yml
+- type: IntegrationEdges
+  url: integrations/tpg-telecom-integration-edges.yml
+- type: Vendors
+  url: vendors/tpg-telecom-vendors.yml
+- type: VulnerabilityDisclosure
+  url: security/tpg-telecom-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/tpg-telecom-domain-security.yml
+- type: Security
+  url: https://www.tpgtelecom.com.au/.well-known/security.txt
+- type: SecurityTxt
+  url: well-known/tpg-telecom-security.txt
+- type: WellKnown
+  url: well-known/tpg-telecom-well-known.yml
+- type: Authentication
+  url: authentication/tpg-telecom-authentication.yml
+- type: Conventions
+  url: conventions/tpg-telecom-conventions.yml
+- type: ErrorCatalog
+  url: errors/tpg-telecom-problem-types.yml
+- type: ErrorCodes
+  url: errors/tpg-telecom-delivery-status-codes.yml
+- type: DataModel
+  url: data-model/tpg-telecom-data-model.yml
+- type: Lifecycle
+  url: lifecycle/tpg-telecom-lifecycle.yml
+- type: StatusPage
+  url: https://status.messaging.tpgtelecom.com.au
+- type: Webhooks
+  url: asyncapi/tpg-telecom-messaging-webhooks.yml
+- type: X-MCPServerCandidate
+  url: mcp/tpg-telecom-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+- type: Conformance
+  url: conformance/tpg-telecom-conformance.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/tpg-telecom-plans.yml
+- type: RateLimits
+  url: rate-limits/tpg-telecom-rate-limits.yml
+- type: Website
+  url: https://www.tpgtelecom.com.au/
+- type: About
+  url: https://www.tpgtelecom.com.au/about-us
+- type: Contact
+  url: https://www.tpgtelecom.com.au/contact
+- type: Documentation
+  url: https://support.messaging.tpgtelecom.com.au/hc/en-us
+- type: GettingStarted
+  url: https://support.messaging.tpgtelecom.com.au/hc/en-us/sections/4656402628367-Quick-Start-Guides
+- type: Support
+  url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4783185128847-Contacting-us
+- type: Pricing
+  url: https://www.vodafone.com.au/business/messaging-hub
+- type: Login
+  url: https://messaging.tpgtelecom.com.au/login
+- type: TermsOfService
+  url: https://www.tpgtelecom.com.au/website-terms
+- type: PrivacyPolicy
+  url: https://www.tpgtelecom.com.au/about-us/privacy
+- type: Legal
+  url: https://www.tpgtelecom.com.au/legal
+- type: Press
+  url: https://www.tpgtelecom.com.au/media_release
+- type: Careers
+  url: https://www.tpgtelecom.com.au/careers
+- type: GitHubOrganization
+  url: https://github.com/tpgtelecom
+- type: LinkedIn
+  url: https://www.linkedin.com/company/tpg-telecom/
+- type: InvestorRelations
+  url: https://www.tpgtelecom.com.au/investor-relations
+- type: Review
+  url: review.yml
+
 apis:
 - aid: tpg-telecom:tpg-telecom-messaging-hub-contacts-api
   name: TPG Telecom Messaging Hub Contacts API
@@ -137,82 +234,30 @@ apis:
     url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4750274170383-Creating-new-API-credentials
   - type: SignUp
     url: https://messaging.tpgtelecom.com.au/login
-common:
-- type: VulnerabilityDisclosure
-  url: security/tpg-telecom-vulnerability-disclosure.yml
-- type: DomainSecurity
-  url: security/tpg-telecom-domain-security.yml
-- type: Security
-  url: https://www.tpgtelecom.com.au/.well-known/security.txt
-- type: SecurityTxt
-  url: well-known/tpg-telecom-security.txt
-- type: WellKnown
-  url: well-known/tpg-telecom-well-known.yml
-- type: Authentication
-  url: authentication/tpg-telecom-authentication.yml
-- type: Conventions
-  url: conventions/tpg-telecom-conventions.yml
-- type: ErrorCatalog
-  url: errors/tpg-telecom-problem-types.yml
-- type: ErrorCodes
-  url: errors/tpg-telecom-delivery-status-codes.yml
-- type: DataModel
-  url: data-model/tpg-telecom-data-model.yml
-- type: Lifecycle
-  url: lifecycle/tpg-telecom-lifecycle.yml
-- type: StatusPage
-  url: https://status.messaging.tpgtelecom.com.au
-- type: Webhooks
-  url: asyncapi/tpg-telecom-messaging-webhooks.yml
-- type: X-MCPServerCandidate
-  url: mcp/tpg-telecom-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
-- type: Packages
-  url: packages/tpg-telecom-packages.yml
-- type: Conformance
-  url: conformance/tpg-telecom-conformance.yml
-- type: LLMsTxt
-  url: llms/tpg-telecom-llms.txt
-- type: AgentSkill
-  url: skills/_index.yml
-- type: Plans
-  url: plans/tpg-telecom-plans.yml
-- type: RateLimits
-  url: rate-limits/tpg-telecom-rate-limits.yml
-- type: Website
-  url: https://www.tpgtelecom.com.au/
-- type: About
-  url: https://www.tpgtelecom.com.au/about-us
-- type: Documentation
-  url: https://support.messaging.tpgtelecom.com.au/hc/en-us
-- type: GettingStarted
-  url: https://support.messaging.tpgtelecom.com.au/hc/en-us/sections/4656402628367-Quick-Start-Guides
-- type: Support
-  url: https://support.messaging.tpgtelecom.com.au/hc/en-us/articles/4783185128847-Contacting-us
-- type: Pricing
-  url: https://www.vodafone.com.au/business/messaging-hub
-- type: Login
-  url: https://messaging.tpgtelecom.com.au/login
-- type: TermsOfService
-  url: https://www.tpgtelecom.com.au/website-terms
-- type: PrivacyPolicy
-  url: https://www.tpgtelecom.com.au/about-us/privacy
-- type: Legal
-  url: https://www.tpgtelecom.com.au/legal
-- type: Press
-  url: https://www.tpgtelecom.com.au/media_release
-- type: Careers
-  url: https://www.tpgtelecom.com.au/careers
-- type: GitHubOrganization
-  url: https://github.com/tpgtelecom
-- type: LinkedIn
-  url: https://www.linkedin.com/company/tpg-telecom/
-- type: InvestorRelations
-  url: https://www.tpgtelecom.com.au/investor-relations
-- type: Review
-  url: review.yml
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
+x-coverage:
+  state: covered
+  reason: enriched
+  detail: 'Identity pass 2026-10-20: Website www.tpgtelecom.com.au verified 200 (title "TPG Telecom"); logo taken from the site header. support.messaging.tpgtelecom.com.au pointers answer 403 with a Cloudflare "Just a moment..." challenge (live page behind edge policy, kept). messaging.tpgtelecom.com.au/login not fetched (auth endpoint, probe-safety rule 3).'
+  evidence:
+  - url: https://www.tpgtelecom.com.au/
+    status: 200
+  - url: https://www.tpgtelecom.com.au/themes/custom/tpg/TPG_Telecom_Logo_RGB.png
+    status: 200
+  - url: https://www.tpgtelecom.com.au/contact
+    status: 200
+  - url: https://support.messaging.tpgtelecom.com.au/hc/en-us
+    status: 403
+  - url: https://status.messaging.tpgtelecom.com.au
+    status: 200
+  - url: https://contactsapiv1tgp.docs.apiary.io/
+    status: 200
+
 x-tags-removed:
 - Partner Gated
+x-enrichment:
+  date: '2026-10-20'
+  status: enriched
+  artifacts_added: 3
+  pass: modular-v1
+  engine: identity=anthropic,contract=anthropic,surfaces=anthropic,docs=anthropic,regulatory=anthropic
